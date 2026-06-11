@@ -33,6 +33,7 @@
             --text-muted: #8b949e;
             --accent: #00f5d4;
             --accent-dim: rgba(0, 245, 212, 0.08);
+            --accent-alert: #ff4a4a;
             
             --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             --font-mono: "Courier New", monospace;
@@ -58,7 +59,6 @@
             position: relative;
         }
 
-        /* Фоновая сетка */
         .matrix-grid {
             position: absolute;
             top: 0;
@@ -184,7 +184,7 @@
             line-height: 1.5;
         }
 
-        /* Секция 3: Интерфейс исследования (Терминал анкеты) */
+        /* Секция 3: Терминал анкеты */
         .screen-protocol {
             padding: 6rem 0;
             min-height: 80vh;
@@ -197,7 +197,7 @@
             background-color: var(--bg-surface);
             border: 1px solid var(--border-color);
             padding: clamp(2rem, 1.5rem + 3vw, 4rem);
-            min-height: 450px;
+            min-height: 480px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -241,11 +241,24 @@
             letter-spacing: -0.01em;
         }
 
-        .input-area textarea {
+        /* Область ввода с интеграцией микрофона */
+        .input-container {
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            gap: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            transition: border-color 0.3s ease;
+        }
+
+        .input-container:focus-within {
+            border-color: var(--accent);
+        }
+
+        .input-container textarea {
             width: 100%;
             background-color: transparent;
             border: none;
-            border-bottom: 1px solid var(--border-color);
             color: var(--text-main);
             font-family: var(--font-sans);
             font-size: clamp(1.05rem, 1rem + 0.5vw, 1.3rem);
@@ -253,11 +266,33 @@
             padding: 0.75rem 0;
             resize: none;
             outline: none;
-            transition: border-color 0.3s ease;
         }
 
-        .input-area textarea:focus {
-            border-color: var(--accent);
+        /* Кнопка микрофона */
+        .mic-btn {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            transition: all 0.3s ease;
+            position: relative;
+            border-radius: 50%;
+        }
+
+        .mic-btn:hover {
+            color: var(--accent);
+            background-color: rgba(0, 245, 212, 0.05);
+        }
+
+        /* Состояние активной записи голоса */
+        .mic-btn.recording {
+            color: var(--accent-alert);
+            background-color: rgba(255, 74, 74, 0.1);
+            animation: pulseGlow 1.5s infinite ease-in-out;
         }
 
         .terminal-footer {
@@ -267,7 +302,6 @@
             align-items: center;
         }
 
-        /* Кнопки */
         .btn {
             display: inline-flex;
             align-items: center;
@@ -301,6 +335,12 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 0 0 rgba(255, 74, 74, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 74, 74, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 74, 74, 0); }
+        }
+
         @media (max-width: 480px) {
             .terminal-footer {
                 flex-direction: column-reverse;
@@ -317,7 +357,6 @@
 
     <div class="matrix-grid"></div>
 
-    <!-- СЕКЦИЯ 1: МАНИФЕСТ -->
     <main class="container screen-manifesto">
         <div class="meta-header">Protocol: Anthroponomy // Ref: rivelazione.org // Status: Active</div>
         <section>
@@ -332,7 +371,6 @@
         </section>
     </main>
 
-    <!-- СЕКЦИЯ 2: ИНЖЕНЕРНЫЙ ДВИЖОК -->
     <section class="container screen-engine">
         <h2>Как сырые наблюдения трансформируются в знания</h2>
         <div class="engine-grid">
@@ -369,48 +407,66 @@
         </div>
     </section>
 
-    <!-- СЕКЦИЯ 3: ТЕРМИНАЛ ИССЛЕДОВАНИЯ -->
     <section id="protocol" class="container screen-protocol">
         <div class="terminal-box">
             <div class="terminal-header">
-                <span id="terminal-step-id">SYS_MAPPING // STEP 1 OF 4</span>
-                <span id="terminal-progress">PROGRESS: 25%</span>
+                <span id="terminal-step-id">SYS_MAPPING // STEP 1 OF 5</span>
+                <span id="terminal-progress">PROGRESS: 20%</span>
             </div>
 
             <form id="research-form" onsubmit="event.preventDefault();">
-                <!-- Вопрос 1 -->
                 <div class="question-wrapper active" data-step="1">
+                    <div class="question-context">System Calibration // Potential Horizon [t_0]</div>
+                    <div class="question-text">Каким вы представляли своё будущее в начале пути? Какой масштаб жизни, векторов влияния и созидания казался вам естественным и правильным?</div>
+                    <div class="input-container">
+                        <textarea rows="3" placeholder="Опишите внутренний горизонт возможностей и ранние представления (доступен голосовой ввод)..." required></textarea>
+                        <button type="button" class="mic-btn" title="Включить транскрибацию голоса">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="question-wrapper" data-step="2">
                     <div class="question-context">Target Matrix // Potential Realization</div>
                     <div class="question-text">Что вы планировали и были внутренне готовы реализовать за последние годы, но проект остался нереализованным?</div>
-                    <div class="input-area">
-                        <textarea rows="2" placeholder="Опишите масштаб задач или идей, которые столкнулись с невидимым барьером..." required></textarea>
+                    <div class="input-container">
+                        <textarea rows="3" placeholder="Опишите масштаб задач или идей, которые столкнулись с невидимым барьером..." required></textarea>
+                        <button type="button" class="mic-btn" title="Включить транскрибацию голоса">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
+                        </button>
                     </div>
                 </div>
 
-                <!-- Вопрос 2 -->
-                <div class="question-wrapper" data-step="2">
+                <div class="question-wrapper" data-step="3">
                     <div class="question-context">Efficiency Analysis // Effective Capacity</div>
                     <div class="question-text">В какой момент стандартного дня вы чувствуете, что фокус падает и система переходит в режим принудительного выживания?</div>
-                    <div class="input-area">
-                        <textarea rows="2" placeholder="Зафиксируйте время угасания и характер изменения вашего состояния..." required></textarea>
+                    <div class="input-container">
+                        <textarea rows="3" placeholder="Зафиксируйте время угасания и характер изменения вашего состояния..." required></textarea>
+                        <button type="button" class="mic-btn" title="Включить транскрибацию голоса">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
+                        </button>
                     </div>
                 </div>
 
-                <!-- Вопрос 3 -->
-                <div class="question-wrapper" data-step="3">
+                <div class="question-wrapper" data-step="4">
                     <div class="question-context">Hardware Configuration // Features</div>
                     <div class="question-text">Какие маркеры вы фиксируете на уровне физического каркаса (зажимы в шее, мигрени, асимметрия, фоновая вялость)?</div>
-                    <div class="input-area">
-                        <textarea rows="2" placeholder="Перечислите физические проявления накопленного биомеханического шума..." required></textarea>
+                    <div class="input-container">
+                        <textarea rows="3" placeholder="Перечислите физические проявления накопленного биомеханического шума..." required></textarea>
+                        <button type="button" class="mic-btn" title="Включить транскрибацию голоса">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
+                        </button>
                     </div>
                 </div>
 
-                <!-- Вопрос 4 -->
-                <div class="question-wrapper" data-step="4">
+                <div class="question-wrapper" data-step="5">
                     <div class="question-context">Energy Balance // Available Capacity</div>
                     <div class="question-text">Какую долю энергии, по вашей внутренней оценке, система тратит впустую на удержание баланса и борьбу со скрытым трением?</div>
-                    <div class="input-area">
-                        <textarea rows="2" placeholder="Оцените объем теряемой мощности (например: более половины, треть ресурса, критически много)..." required></textarea>
+                    <div class="input-container">
+                        <textarea rows="3" placeholder="Оцените объем теряемой мощности (например: более половины, треть ресурса)..." required></textarea>
+                        <button type="button" class="mic-btn" title="Включить транскрибацию голоса">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
+                        </button>
                     </div>
                 </div>
             </form>
@@ -430,7 +486,98 @@
         const progressText = document.getElementById('terminal-progress');
         let currentStep = 1;
 
+        // Интеграция Web Speech API для транскрибации голоса
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        let recognition = null;
+        let isRecording = false;
+        let currentActiveTextarea = null;
+        let currentActiveButton = null;
+
+        if (SpeechRecognition) {
+            recognition = new SpeechRecognition();
+            recognition.continuous = true;
+            recognition.interimResults = true;
+            recognition.lang = 'ru-RU';
+
+            recognition.onresult = (event) => {
+                let interimTranscript = '';
+                let finalTranscript = '';
+
+                for (let i = event.resultIndex; i < event.results.length; ++i) {
+                    if (event.results[i].isFinal) {
+                        finalTranscript += event.results[i][0].transcript;
+                    } else {
+                        interimTranscript += event.results[i][0].transcript;
+                    }
+                }
+
+                if (currentActiveTextarea) {
+                    // Добавляем текст, сохраняя то, что уже было введено вручную
+                    if (finalTranscript) {
+                        currentActiveTextarea.value += (currentActiveTextarea.value ? ' ' : '') + finalTranscript;
+                    }
+                }
+            };
+
+            recognition.onerror = (event) => {
+                console.error("Speech recognition error:", event.error);
+                stopSpeechRecognition();
+            };
+
+            recognition.onend = () => {
+                stopSpeechRecognition();
+            };
+        } else {
+            // Если браузер не поддерживает API (например, старые версии), скрываем кнопки микрофона
+            document.querySelectorAll('.mic-btn').forEach(btn => btn.style.display = 'none');
+            console.log("Web Speech API не поддерживается данным браузером.");
+        }
+
+        function toggleSpeechRecognition(textarea, button) {
+            if (isRecording) {
+                stopSpeechRecognition();
+            } else {
+                startSpeechRecognition(textarea, button);
+            }
+        }
+
+        function startSpeechRecognition(textarea, button) {
+            if (!recognition) return;
+            isRecording = true;
+            currentActiveTextarea = textarea;
+            currentActiveButton = button;
+            button.classList.add('recording');
+            textarea.focus();
+            recognition.start();
+        }
+
+        function stopSpeechRecognition() {
+            if (!recognition || !isRecording) return;
+            isRecording = false;
+            if (currentActiveButton) {
+                currentActiveButton.classList.remove('recording');
+            }
+            recognition.stop();
+            currentActiveTextarea = null;
+            currentActiveButton = null;
+        }
+
+        // Навешивание обработчиков на все кнопки микрофонов
+        document.querySelectorAll('.question-wrapper').forEach(wrapper => {
+            const textarea = wrapper.querySelector('textarea');
+            const micBtn = wrapper.querySelector('.mic-btn');
+            
+            if (micBtn && textarea) {
+                micBtn.addEventListener('click', () => {
+                    toggleSpeechRecognition(textarea, micBtn);
+                });
+            }
+        });
+
         function updateTerminal() {
+            // Принудительно останавливаем запись при смене шага анкеты
+            stopSpeechRecognition();
+
             steps.forEach(step => {
                 step.classList.remove('active');
                 if (parseInt(step.getAttribute('data-step')) === currentStep) {
@@ -438,21 +585,18 @@
                 }
             });
 
-            // Управление состоянием кнопки "Назад"
             if (currentStep === 1) {
                 btnPrev.classList.add('btn-disabled');
             } else {
                 btnPrev.classList.remove('btn-disabled');
             }
 
-            // Изменение текста на последнем шаге
             if (currentStep === steps.length) {
                 btnNext.innerText = "Передать пакет данных ✓";
             } else {
                 btnNext.innerText = "Далее →";
             }
 
-            // Обновление технического лога в шапке терминала
             stepIdText.innerText = `SYS_MAPPING // STEP ${currentStep} OF ${steps.length}`;
             progressText.innerText = `PROGRESS: ${Math.round((currentStep / steps.length) * 100)}%`;
         }
@@ -461,16 +605,15 @@
             const currentTextarea = steps[currentStep - 1].querySelector('textarea');
             
             if (!currentTextarea.value.trim()) {
-                currentTextarea.style.borderColor = "#ff4a4a";
+                currentTextarea.parentElement.style.borderColor = "var(--accent-alert)";
                 return;
             }
-            currentTextarea.style.borderColor = "var(--border-color)";
+            currentTextarea.parentElement.style.borderColor = "var(--border-color)";
 
             if (currentStep < steps.length) {
                 currentStep++;
                 updateTerminal();
             } else {
-                // Финальное действие — отправка пакета данных
                 alert("Пакет стандартизированных наблюдений сформирован и готов к передаче в контур Cloudflare Workers.");
             }
         });
