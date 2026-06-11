@@ -44,6 +44,10 @@
             padding: 0;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             background-color: var(--bg-main);
             color: var(--text-main);
@@ -51,14 +55,10 @@
             letter-spacing: -0.01em;
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
             position: relative;
         }
 
-        /* Инженерная фоновая сетка */
+        /* Фоновая сетка */
         .matrix-grid {
             position: absolute;
             top: 0;
@@ -76,19 +76,18 @@
             width: 100%;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 2rem calc(1rem + 2vw);
+            padding: 4rem calc(1rem + 2vw);
             position: relative;
             z-index: 2;
         }
 
-        /* Верхний технический лог */
         .meta-header {
             font-family: var(--font-mono);
             font-size: clamp(0.75rem, 0.7rem + 0.2vw, 0.9rem);
             color: var(--accent);
             text-transform: uppercase;
             letter-spacing: 0.15em;
-            margin-bottom: clamp(2rem, 1.5rem + 3vw, 4rem);
+            margin-bottom: 2rem;
             display: flex;
             align-items: center;
             gap: 0.75rem;
@@ -104,9 +103,14 @@
             border-radius: 50%;
         }
 
-        /* Контентная секция манифеста */
-        .manifesto-content {
-            max-width: 960px;
+        /* Секция 1: Манифест */
+        .screen-manifesto {
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 4rem;
         }
 
         h1 {
@@ -114,19 +118,19 @@
             font-weight: 700;
             line-height: 1.1;
             letter-spacing: -0.03em;
-            margin-bottom: clamp(1.5rem, 1rem + 2vw, 2.5rem);
-            color: var(--text-main);
+            margin-bottom: 2rem;
         }
 
         .lead-text {
-            font-size: clamp(1.1rem, 0.9rem + 1vw, 1.5rem);
-            line-height: 1.5;
+            font-size: clamp(1.1rem, 0.9rem + 1vw, 1.4rem);
+            line-height: 1.6;
             color: var(--text-muted);
-            margin-bottom: clamp(2rem, 1.5rem + 3vw, 3.5rem);
+            max-width: 900px;
+            margin-bottom: 3rem;
         }
 
         .lead-text p {
-            margin-bottom: 1.25rem;
+            margin-bottom: 1.5rem;
         }
 
         .lead-text p strong {
@@ -134,55 +138,177 @@
             font-weight: 500;
         }
 
-        /* Инженерная кнопка-терминал */
-        .action-area {
-            display: inline-block;
+        /* Секция 2: Движок обработки данных */
+        .screen-engine {
+            padding: 6rem 0;
+            border-bottom: 1px solid var(--border-color);
         }
 
-        .btn-protocol {
+        h2 {
+            font-size: clamp(1.6rem, 1.2rem + 2vw, 2.5rem);
+            letter-spacing: -0.02em;
+            margin-bottom: 3rem;
+        }
+
+        .engine-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .engine-step {
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            padding: 2rem;
+            position: relative;
+        }
+
+        .step-num {
+            font-family: var(--font-mono);
+            color: var(--accent);
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            display: block;
+            letter-spacing: 0.1em;
+        }
+
+        .step-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .step-desc {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* Секция 3: Интерфейс исследования (Терминал анкеты) */
+        .screen-protocol {
+            padding: 6rem 0;
+            min-height: 80vh;
             display: flex;
-            align-items: center;
+            flex-direction: column;
             justify-content: center;
-            gap: 1.5rem;
+        }
+
+        .terminal-box {
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            padding: clamp(2rem, 1.5rem + 3vw, 4rem);
+            min-height: 450px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .terminal-header {
+            display: flex;
+            justify-content: space-between;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .question-wrapper {
+            display: none;
+        }
+
+        .question-wrapper.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .question-context {
+            font-family: var(--font-mono);
+            color: var(--accent);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            letter-spacing: 0.05em;
+        }
+
+        .question-text {
+            font-size: clamp(1.3rem, 1rem + 1.5vw, 2rem);
+            font-weight: 600;
+            line-height: 1.3;
+            margin-bottom: 2rem;
+            letter-spacing: -0.01em;
+        }
+
+        .input-area textarea {
+            width: 100%;
+            background-color: transparent;
+            border: none;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            font-size: clamp(1.05rem, 1rem + 0.5vw, 1.3rem);
+            line-height: 1.5;
+            padding: 0.75rem 0;
+            resize: none;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .input-area textarea:focus {
+            border-color: var(--accent);
+        }
+
+        .terminal-footer {
+            margin-top: 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Кнопки */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
             background-color: transparent;
             color: var(--text-main);
             border: 1px solid var(--border-color);
-            padding: clamp(1rem, 0.8rem + 1vw, 1.4rem) clamp(1.5rem, 1.2rem + 2vw, 3rem);
+            padding: 1rem 2rem;
             font-family: var(--font-mono);
-            font-size: clamp(0.85rem, 0.8rem + 0.3vw, 1.05rem);
+            font-size: 0.9rem;
             text-transform: uppercase;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.05em;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            position: relative;
+            transition: all 0.3s ease;
             text-decoration: none;
         }
 
-        .btn-protocol:hover {
+        .btn:hover {
             border-color: var(--accent);
             background-color: var(--accent-dim);
-            box-shadow: 0 0 20px rgba(0, 245, 212, 0.1);
             color: var(--accent);
         }
 
-        .btn-protocol .arrow {
-            color: var(--accent);
-            transition: transform 0.3s ease;
+        .btn-disabled {
+            opacity: 0.3;
+            pointer-events: none;
         }
 
-        .btn-protocol:hover .arrow {
-            transform: translateX(6px);
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Адаптация под мобильные экраны (безопасные зоны для iOS) */
         @media (max-width: 480px) {
-            body {
-                justify-content: flex-start;
-                padding-top: env(safe-area-inset-top, 2rem);
-                padding-bottom: env(safe-area-inset-bottom, 2rem);
+            .terminal-footer {
+                flex-direction: column-reverse;
+                gap: 1rem;
+                align-items: stretch;
             }
-            .btn-protocol {
-                width: 100%;
+            .btn {
+                justify-content: center;
             }
         }
     </style>
@@ -191,28 +317,170 @@
 
     <div class="matrix-grid"></div>
 
-    <main class="container">
-        <div class="meta-header">
-            Protocol: Anthroponomy // Ref: rivelazione.org // Status: Active
-        </div>
-
-        <section class="manifesto-content">
+    <!-- СЕКЦИЯ 1: МАНИФЕСТ -->
+    <main class="container screen-manifesto">
+        <div class="meta-header">Protocol: Anthroponomy // Ref: rivelazione.org // Status: Active</div>
+        <section>
             <h1>Почему реализуется не весь потенциал?</h1>
-            
             <div class="lead-text">
                 <p>Большинство людей приходят в контур Anthroponomy не потому, что у них отсутствует потенциал. Наоборот — они годами чувствуют разрыв между тем, что способны создать, и тем, что реально удаётся реализовать. Они видят масштаб, понимают направление, имеют опыт и знания — но постоянно сталкиваются с невидимым потолком.</p>
-                
                 <p>Мы не начинаем с теории потенциала. Мы начинаем с <strong>наблюдения траекторий вашей реальной ежедневной реализации</strong>. Наша задача — не доказать наличие вашего масштаба, а исследовать один точный инженерный вопрос: где именно между возможностью и результатом система теряет мощность?</p>
             </div>
-
-            <div class="action-area">
-                <a href="#protocol" class="btn-protocol">
-                    <span>Войти в контур исследования</span>
-                    <span class="arrow">→</span>
-                </a>
+            <div>
+                <a href="#protocol" class="btn">Войти в контур исследования →</a>
             </div>
         </section>
     </main>
 
+    <!-- СЕКЦИЯ 2: ИНЖЕНЕРНЫЙ ДВИЖОК -->
+    <section class="container screen-engine">
+        <h2>Как сырые наблюдения трансформируются в знания</h2>
+        <div class="engine-grid">
+            <div class="engine-step">
+                <span class="step-num">01 // DATA</span>
+                <div class="step-title">Зачем нужны данные?</div>
+                <div class="step-desc">Чтобы перевести субъективные жалобы на усталость или потерю фокуса в объективные метрики и зафиксировать точки сбоя.</div>
+            </div>
+            <div class="engine-step">
+                <span class="step-num">02 // FEATURES</span>
+                <div class="step-title">Выявление признаков</div>
+                <div class="step-desc">Сбор поведенческих и аппаратных маркеров. Оцифровка длительности перегрузок и характера биомеханического шума.</div>
+            </div>
+            <div class="engine-step">
+                <span class="step-num">03 // COORDINATES</span>
+                <div class="step-title">Расчет координат</div>
+                <div class="step-desc">Перевод признаков в математические веса на многомерной карте. Поиск точной локализации скрытого ограничения системы.</div>
+            </div>
+            <div class="engine-step">
+                <span class="step-num">04 // NAVIGATION</span>
+                <div class="step-title">Построение навигации</div>
+                <div class="step-desc">Формирование пошагового алгоритма по ликвидации внутреннего трения и де-оккупации когнитивного контура.</div>
+            </div>
+            <div class="engine-step">
+                <span class="step-num">05 // TRAJECTORY</span>
+                <div class="step-title">Выпрямление траектории</div>
+                <div class="step-desc">Развертывание подсказок во времени. Мониторинг изменений при переходе системы из точки потери в проектный оптимум.</div>
+            </div>
+            <div class="engine-step">
+                <span class="step-num">06 // KNOWLEDGE</span>
+                <div class="step-title">Формирование знаний</div>
+                <div class="step-desc">Анонимизированные траектории участников формируют глобальный массив стандартизированных наблюдений о потенциале человека.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- СЕКЦИЯ 3: ТЕРМИНАЛ ИССЛЕДОВАНИЯ -->
+    <section id="protocol" class="container screen-protocol">
+        <div class="terminal-box">
+            <div class="terminal-header">
+                <span id="terminal-step-id">SYS_MAPPING // STEP 1 OF 4</span>
+                <span id="terminal-progress">PROGRESS: 25%</span>
+            </div>
+
+            <form id="research-form" onsubmit="event.preventDefault();">
+                <!-- Вопрос 1 -->
+                <div class="question-wrapper active" data-step="1">
+                    <div class="question-context">Target Matrix // Potential Realization</div>
+                    <div class="question-text">Что вы планировали и были внутренне готовы реализовать за последние годы, но проект остался нереализованным?</div>
+                    <div class="input-area">
+                        <textarea rows="2" placeholder="Опишите масштаб задач или идей, которые столкнулись с невидимым барьером..." required></textarea>
+                    </div>
+                </div>
+
+                <!-- Вопрос 2 -->
+                <div class="question-wrapper" data-step="2">
+                    <div class="question-context">Efficiency Analysis // Effective Capacity</div>
+                    <div class="question-text">В какой момент стандартного дня вы чувствуете, что фокус падает и система переходит в режим принудительного выживания?</div>
+                    <div class="input-area">
+                        <textarea rows="2" placeholder="Зафиксируйте время угасания и характер изменения вашего состояния..." required></textarea>
+                    </div>
+                </div>
+
+                <!-- Вопрос 3 -->
+                <div class="question-wrapper" data-step="3">
+                    <div class="question-context">Hardware Configuration // Features</div>
+                    <div class="question-text">Какие маркеры вы фиксируете на уровне физического каркаса (зажимы в шее, мигрени, асимметрия, фоновая вялость)?</div>
+                    <div class="input-area">
+                        <textarea rows="2" placeholder="Перечислите физические проявления накопленного биомеханического шума..." required></textarea>
+                    </div>
+                </div>
+
+                <!-- Вопрос 4 -->
+                <div class="question-wrapper" data-step="4">
+                    <div class="question-context">Energy Balance // Available Capacity</div>
+                    <div class="question-text">Какую долю энергии, по вашей внутренней оценке, система тратит впустую на удержание баланса и борьбу со скрытым трением?</div>
+                    <div class="input-area">
+                        <textarea rows="2" placeholder="Оцените объем теряемой мощности (например: более половины, треть ресурса, критически много)..." required></textarea>
+                    </div>
+                </div>
+            </form>
+
+            <div class="terminal-footer">
+                <button type="button" id="btn-prev" class="btn btn-disabled">← Назад</button>
+                <button type="button" id="btn-next" class="btn">Далее →</button>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const steps = document.querySelectorAll('.question-wrapper');
+        const btnNext = document.getElementById('btn-next');
+        const btnPrev = document.getElementById('btn-prev');
+        const stepIdText = document.getElementById('terminal-step-id');
+        const progressText = document.getElementById('terminal-progress');
+        let currentStep = 1;
+
+        function updateTerminal() {
+            steps.forEach(step => {
+                step.classList.remove('active');
+                if (parseInt(step.getAttribute('data-step')) === currentStep) {
+                    step.classList.add('active');
+                }
+            });
+
+            // Управление состоянием кнопки "Назад"
+            if (currentStep === 1) {
+                btnPrev.classList.add('btn-disabled');
+            } else {
+                btnPrev.classList.remove('btn-disabled');
+            }
+
+            // Изменение текста на последнем шаге
+            if (currentStep === steps.length) {
+                btnNext.innerText = "Передать пакет данных ✓";
+            } else {
+                btnNext.innerText = "Далее →";
+            }
+
+            // Обновление технического лога в шапке терминала
+            stepIdText.innerText = `SYS_MAPPING // STEP ${currentStep} OF ${steps.length}`;
+            progressText.innerText = `PROGRESS: ${Math.round((currentStep / steps.length) * 100)}%`;
+        }
+
+        btnNext.addEventListener('click', () => {
+            const currentTextarea = steps[currentStep - 1].querySelector('textarea');
+            
+            if (!currentTextarea.value.trim()) {
+                currentTextarea.style.borderColor = "#ff4a4a";
+                return;
+            }
+            currentTextarea.style.borderColor = "var(--border-color)";
+
+            if (currentStep < steps.length) {
+                currentStep++;
+                updateTerminal();
+            } else {
+                // Финальное действие — отправка пакета данных
+                alert("Пакет стандартизированных наблюдений сформирован и готов к передаче в контур Cloudflare Workers.");
+            }
+        });
+
+        btnPrev.addEventListener('click', () => {
+            if (currentStep > 1) {
+                currentStep--;
+                updateTerminal();
+            }
+        });
+    </script>
 </body>
 </html>
