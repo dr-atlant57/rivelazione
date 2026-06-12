@@ -251,111 +251,160 @@
             transition: border-color 0.3s ease;
         }
 
-        .input-container:focus-within {
-            border-color: var(--accent);
-        }
+        <script src="./js/20_frontend.js"></script>
 
-        .input-container textarea {
-            width: 100%;
-            background-color: transparent;
-            border: none;
-            color: var(--text-main);
-            font-family: var(--font-sans);
-            font-size: clamp(1.05rem, 1rem + 0.5vw, 1.3rem);
-            line-height: 1.5;
-            padding: 0.75rem 0;
-            resize: none;
-            outline: none;
-        }
+    <script>
+        const steps = document.querySelectorAll('.question-wrapper');
+        const btnNext = document.getElementById('btn-next');
+        const btnPrev = document.getElementById('btn-prev');
+        const stepIdText = document.getElementById('terminal-step-id');
+        const progressText = document.getElementById('terminal-progress');
+        let currentStep = 1;
 
-        /* Кнопка микрофона */
-        .mic-btn {
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            padding: 0.75rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-muted);
-            transition: all 0.3s ease;
-            position: relative;
-            border-radius: 50%;
-        }
+        let runtimeSession = null;
 
-        .mic-btn:hover {
-            color: var(--accent);
-            background-color: rgba(0, 245, 212, 0.05);
-        }
+        // Инициализация Intake Runtime Engine при загрузке страницы
+        document.addEventListener("DOMContentLoaded", async () => {
+            const WORKER_URL = "https://api.rivelazione.org"; 
+            const PARTICIPANT_ID = "part_" + Math.floor(100000 + Math.random() * 900000); // Генерация ID участника
+            const STUDY_ID = "anthroponomy_intake_v1";
 
-        /* Состояние активной записи голоса */
-        .mic-btn.recording {
-            color: var(--accent-alert);
-            background-color: rgba(255, 74, 74, 0.1);
-            animation: pulseGlow 1.5s infinite ease-in-out;
-        }
-
-        .terminal-footer {
-            margin-top: 3rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 1rem;
-            background-color: transparent;
-            color: var(--text-main);
-            border: 1px solid var(--border-color);
-            padding: 1rem 2rem;
-            font-family: var(--font-mono);
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-        }
-
-        .btn:hover {
-            border-color: var(--accent);
-            background-color: var(--accent-dim);
-            color: var(--accent);
-        }
-
-        .btn-disabled {
-            opacity: 0.3;
-            pointer-events: none;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes pulseGlow {
-            0% { box-shadow: 0 0 0 0 rgba(255, 74, 74, 0.4); }
-            70% { box-shadow: 0 0 0 10px rgba(255, 74, 74, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(255, 74, 74, 0); }
-        }
-
-        @media (max-width: 480px) {
-            .terminal-footer {
-                flex-direction: column-reverse;
-                gap: 1rem;
-                align-items: stretch;
+            try {
+                // Серверный Handshake, получение Session_ID и запуск Evidence-слоя
+                runtimeSession = await window.AnthroponomyRuntime.launch(WORKER_URL, PARTICIPANT_ID, STUDY_ID);
+                console.log("[Anthroponomy Runtime]: Контур успешно запущен. Мониторинг когнитивного трения активен.");
+                
+                // Передаем управление интерфейсом нашему Voice-движку
+                initInterfaceBindings();
+            } catch (error) {
+                console.error("[Anthroponomy Init Error]: Критический сбой запуска рантайма:", error);
             }
-            .btn {
-                justify-content: center;
+        });
+
+        function initInterfaceBindings() {
+            if (!runtimeSession) return;
+
+            // Навешиваем логику на кнопки микрофонов каждого шага
+            document.querySelectorAll('.question-wrapper').forEach(wrapper => {
+                const textarea = wrapper.querySelector('textarea');
+                const micBtn = wrapper.querySelector('.mic-btn');
+                
+                if (micBtn && textarea) {
+                    // Перенаправляем вывод голоса из нашего отказоустойчивого VoiceEngine напрямую в текущее поле ввода
+                    runtimeSession.voiceEngine.onBufferUpdate = (text) => {
+                        textarea.value = text;
+                    };
+
+                    micBtn.addEventListener('click', () => {
+                        if (runtimeSession.voiceEngine.isStarted) {
+                            runtimeSession.voiceEngine.stop();
+                            micBtn.classList.remove('recording');
+                        } else {
+                            // Активируем запись и включаем пульсацию на UI
+                            const success = runtimeSession.voiceEngine.start();
+                            if (success) {
+                                micBtn.classList.add('recording');
+                                textarea.focus();
+                            }
+                        }
+                    });
+                }
+            });
+
+            // Отслеживание ручных правок текста для фиксации плотности коррекции
+            document.querySelectorAll('.input-container textarea').forEach(textarea => {
+                textarea.addEventListener('input', () => {
+                    runtimeSession.evidenceCore.evidence.manual_edit_count++;
+                    runtimeSession.evidenceCore.researchProfile.correction_density = 
+                        parseFloat((runtimeSession.evidenceCore.evidence.manual_edit_count / Math.max(textarea.value.length, 1)).toFixed(3));
+                    runtimeSession.evidenceCore.logEvent('ui_manual_edit');
+                });
+            });
+        }
+
+        async function handleStepSubmission() {
+            const currentWrapper = steps[currentStep - 1];
+            const currentTextarea = currentWrapper.querySelector('textarea');
+            const currentMicBtn = currentWrapper.querySelector('.mic-btn');
+            const questionId = currentWrapper.querySelector('textarea').parentElement.parentElement.dataset.step;
+            
+            const textData = currentTextarea.value.trim();
+
+            // Валидация заполнения поля
+            if (!textData) {
+                currentTextarea.parentElement.style.borderColor = "var(--accent-alert)";
+                return;
+            }
+            currentTextarea.parentElement.style.borderColor = "var(--border-color)";
+
+            // Выключаем микрофон, если он не был выключен вручную
+            if (runtimeSession && runtimeSession.voiceEngine.isStarted) {
+                runtimeSession.voiceEngine.stop();
+                if (currentMicBtn) currentMicBtn.classList.remove('recording');
+            }
+
+            btnNext.classList.add('btn-disabled');
+            btnNext.innerText = "Фиксация...";
+
+            try {
+                // Отправка иммутабельного конверта с когнитивным профилем на Cloudflare Worker
+                await runtimeSession.submitAnswer(`Q_STEP_0${currentStep}`, textData);
+                
+                if (currentStep < steps.length) {
+                    currentStep++;
+                    updateTerminal();
+                } else {
+                    btnNext.innerText = "Передано ✓";
+                    alert("Исследование завершено. Весь пакет стандартизированных наблюдений и структурных признаков мышления успешно зафиксирован в СУБД D1.");
+                    runtimeSession.sm.transition('COMPLETED');
+                }
+            } catch (error) {
+                console.error("[Runtime Submission Error]: Потеря связи с интейк-контуром:", error);
+                alert("Ошибка передачи данных. Включен режим сетевого удержания (Retry Loop).");
+            } finally {
+                if (currentStep < steps.length) {
+                    btnNext.classList.remove('btn-disabled');
+                }
             }
         }
-    </style>
-</head>
-<body>
 
-    <div class="matrix-grid"></div>
+        function updateTerminal() {
+            if (runtimeSession && runtimeSession.voiceEngine.isStarted) {
+                runtimeSession.voiceEngine.stop();
+            }
+
+            steps.forEach(step => {
+                step.classList.remove('active');
+                if (parseInt(step.getAttribute('data-step')) === currentStep) {
+                    step.classList.add('active');
+                }
+            });
+
+            if (currentStep === 1) {
+                btnPrev.classList.add('btn-disabled');
+            } else {
+                btnPrev.classList.remove('btn-disabled');
+            }
+
+            if (currentStep === steps.length) {
+                btnNext.innerText = "Передать пакет данных ✓";
+            } else {
+                btnNext.innerText = "Далее →";
+            }
+
+            stepIdText.innerText = `SYS_MAPPING // STEP ${currentStep} OF ${steps.length}`;
+            progressText.innerText = `PROGRESS: ${Math.round((currentStep / steps.length) * 100)}%`;
+        }
+
+        btnNext.addEventListener('click', handleStepSubmission);
+
+        btnPrev.addEventListener('click', () => {
+            if (currentStep > 1) {
+                currentStep--;
+                updateTerminal();
+            }
+        });
+    </script>
 
     <main class="container screen-manifesto">
         <div class="meta-header">Protocol: Anthroponomy // Ref: rivelazione.org // Status: Active</div>
