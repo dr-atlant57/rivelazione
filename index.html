@@ -3,53 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Rivelazione — Anthroponomy Research Engine</title>
-    <meta name="description" content="Протокол Anthroponomy: анализ траекторий реализации, выявление скрытого биомеханического шума и аудит эффективной емкости человека.">
+    <title>Rivelazione — Исследование барьеров реализации</title>
     
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "MedicalWebPage",
-      "mainEntity": {
-        "@type": "MedicalStudy",
-        "name": "Исследование системных ограничений человеческого потенциала",
-        "studyCategory": "Observational",
-        "description": "Анализ траекторий реализации потенциала, выявление биомеханического шума и расчет эффективной емкости системы человека."
-      },
-      "author": {
-        "@type": "Organization",
-        "name": "Anthroponomy Lab"
-      }
-    }
-    </script>
-
     <style>
         :root {
             --bg-main: #0a0e14;
             --bg-surface: #11161d;
             --border-color: rgba(0, 245, 212, 0.15);
             --border-hover: rgba(0, 245, 212, 0.4);
-            
             --text-main: #f0f6fc;
             --text-muted: #8b949e;
             --accent: #00f5d4;
             --accent-dim: rgba(0, 245, 212, 0.04);
             --accent-alert: #ff4a4a;
-            
-            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             --font-mono: "Courier New", monospace;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
         body {
             background-color: var(--bg-main);
             color: var(--text-main);
@@ -57,768 +29,459 @@
             letter-spacing: -0.01em;
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
-            position: relative;
         }
 
-        /* Фоновая сетка лаборатории */
         .matrix-grid {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             background-image: linear-gradient(var(--border-color) 1px, transparent 1px),
                               linear-gradient(90deg, var(--border-color) 1px, transparent 1px);
             background-size: 60px 60px;
-            z-index: 1;
-            pointer-events: none;
-            opacity: 0.6;
+            z-index: 1; opacity: 0.4; pointer-events: none;
         }
 
-        /* Переключатель языков верхнего уровня */
-        .lang-switcher {
+        .top-bar {
             position: fixed;
-            top: 20px;
-            right: 20px;
+            top: 20px; right: 20px;
             z-index: 100;
             background: rgba(17, 22, 29, 0.8);
             border: 1px solid var(--border-color);
-            padding: 5px 10px;
+            padding: 5px 15px;
             font-family: var(--font-mono);
             font-size: 0.8rem;
-            display: flex;
-            gap: 10px;
+            display: flex; gap: 15px;
+            backdrop-filter: blur(8px);
         }
 
         .lang-btn {
-            color: var(--text-muted);
-            cursor: pointer;
-            transition: color 0.3s ease;
-            background: none;
-            border: none;
-            text-transform: uppercase;
+            color: var(--text-muted); cursor: pointer; background: none; border: none; text-transform: uppercase;
         }
-
-        .lang-btn.active {
-            color: var(--accent);
-            text-shadow: 0 0 8px var(--accent);
-            font-weight: bold;
-        }
+        .lang-btn.active { color: var(--accent); font-weight: bold; text-shadow: 0 0 8px var(--accent); }
 
         .container {
-            width: 100%;
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 4rem calc(1rem + 2vw);
-            position: relative;
-            z-index: 2;
-        }
-
-        .meta-header {
-            font-family: var(--font-mono);
-            font-size: clamp(0.75rem, 0.7rem + 0.2vw, 0.85rem);
-            color: var(--accent);
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            margin-bottom: 2rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .meta-header::before {
-            content: "";
-            display: inline-block;
-            width: 6px;
-            height: 6px;
-            background-color: var(--accent);
-            box-shadow: 0 0 8px var(--accent);
-            border-radius: 50%;
+            width: 100%; max-width: 900px; margin: 0 auto; padding: 6rem calc(1rem + 2vw); position: relative; z-index: 2;
         }
 
         section {
-            background: rgba(17, 22, 29, 0.6);
+            background: rgba(17, 22, 29, 0.7);
             border: 1px solid var(--border-color);
             padding: clamp(2rem, 2rem + 3vw, 4rem);
-            margin-bottom: 4rem;
-            backdrop-filter: blur(8px);
+            margin-bottom: 3.5rem;
+            backdrop-filter: blur(10px);
             transition: border-color 0.4s ease;
         }
-
-        section:hover {
-            border-color: var(--border-hover);
-        }
+        section:hover { border-color: var(--border-hover); }
 
         h1 {
-            font-size: clamp(2.4rem, 1.5rem + 4vw, 4.2rem);
-            font-weight: 700;
-            line-height: 1.1;
-            letter-spacing: -0.03em;
-            margin-bottom: 2rem;
-            text-shadow: 0 0 20px rgba(0, 245, 212, 0.05);
+            font-size: clamp(2.2rem, 1.5rem + 4vw, 3.8rem); font-weight: 700; line-height: 1.15; margin-bottom: 2rem;
         }
-
         h2 {
-            font-size: clamp(1.5rem, 1.2rem + 2vw, 2.2rem);
-            letter-spacing: -0.02em;
-            margin-bottom: 2rem;
-            font-weight: 600;
-            font-family: var(--font-mono);
-            color: var(--accent);
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 0.75rem;
+            font-size: clamp(1.4rem, 1.2rem + 1.5vw, 2rem); margin-bottom: 2rem; font-family: var(--font-sans); color: var(--accent);
         }
 
-        h3 {
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-            font-weight: 500;
-            color: var(--text-main);
-        }
+        .lead-text { font-size: clamp(1.1rem, 1rem + 0.4vw, 1.3rem); line-height: 1.65; color: var(--text-muted); }
+        .lead-text p { margin-bottom: 1.5rem; }
 
-        .lead-text {
-            font-size: clamp(1.05rem, 0.95rem + 0.5vw, 1.25rem);
-            line-height: 1.65;
-            color: var(--text-muted);
+        /* Стили для выбора роли */
+        .role-selector-box {
+            margin: 3rem 0; background: rgba(10, 14, 20, 0.6); padding: 2rem; border: 1px dashed var(--border-color);
         }
-
-        .lead-text p {
-            margin-bottom: 1.5rem;
+        .role-title { font-family: var(--font-mono); font-size: 0.85rem; color: var(--accent); margin-bottom: 1rem; text-transform: uppercase; }
+        .role-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; }
+        .role-card {
+            background: var(--bg-main); border: 1px solid var(--border-color); padding: 1rem; text-align: center;
+            font-size: 0.95rem; cursor: pointer; transition: all 0.3s ease;
         }
+        .role-card:hover, .role-card.active { border-color: var(--accent); background: var(--accent-dim); color: var(--accent); }
 
-        .lead-text p strong {
-            color: var(--text-main);
-            font-weight: 500;
-        }
-
-        .definition-box {
-            background-color: rgba(10, 14, 20, 0.8);
-            border-left: 2px solid var(--accent);
-            padding: 1.5rem;
-            margin: 2.5rem 0;
-            border-top: 1px solid var(--border-color);
-            border-right: 1px solid var(--border-color);
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .definition-title {
-            font-family: var(--font-mono);
-            color: var(--accent);
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            margin-bottom: 0.75rem;
-            letter-spacing: 0.1em;
-        }
-
-        .grid-two {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 2rem;
-            margin-top: 2.5rem;
-        }
-
-        .grid-card {
-            background: rgba(10, 14, 20, 0.5);
-            border: 1px solid var(--border-color);
-            padding: 1.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .grid-card:hover {
-            border-color: var(--accent);
-            background: var(--accent-dim);
-        }
-
-        /* Инженерный интерактивный граф */
-        .flow-container {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            max-width: 450px;
-            margin: 3rem 0;
-            font-family: var(--font-mono);
-            font-size: 0.85rem;
-        }
-
-        .flow-node {
-            background-color: rgba(10, 14, 20, 0.9);
-            border: 1px solid var(--border-color);
-            padding: 0.85rem 1.5rem;
-            text-align: center;
-            letter-spacing: 0.05em;
-            transition: all 0.3s ease;
-        }
-
-        .flow-node:hover {
-            color: var(--accent);
-            border-color: var(--accent);
-            box-shadow: 0 0 10px var(--accent-dim);
-        }
-
-        .flow-arrow {
-            text-align: center;
-            color: var(--accent);
-            font-size: 1.1rem;
-            opacity: 0.7;
-        }
-
-        /* Научный терминал ввода */
+        /* Терминал опроса */
         .terminal-box {
-            background-color: #0d1117;
-            border: 1px solid var(--accent);
-            padding: clamp(1.5rem, 1.5rem + 3vw, 3.5rem);
-            min-height: 480px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            position: relative;
-            box-shadow: 0 0 30px rgba(0, 245, 212, 0.03);
+            background-color: #0b0f15; border: 1px solid var(--accent); padding: clamp(1.5rem, 1.5rem + 3vw, 3rem);
+            min-height: 450px; display: flex; flex-direction: column; justify-content: space-between;
         }
-
         .terminal-header {
-            display: flex;
-            justify-content: space-between;
-            font-family: var(--font-mono);
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 1rem;
-            margin-bottom: 2.5rem;
+            display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-muted);
+            border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 2.5rem;
         }
-
-        .question-wrapper {
-            display: none;
-        }
-
-        .question-wrapper.active {
-            display: block;
-            animation: fadeIn 0.4s ease;
-        }
-
-        .question-context {
-            font-family: var(--font-mono);
-            color: var(--accent);
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            margin-bottom: 1rem;
-            letter-spacing: 0.05em;
-        }
-
-        .question-text {
-            font-size: clamp(1.25rem, 1rem + 1.5vw, 1.8rem);
-            font-weight: 600;
-            line-height: 1.35;
-            margin-bottom: 2.5rem;
-            letter-spacing: -0.01em;
-        }
+        .question-wrapper { display: none; }
+        .question-wrapper.active { display: block; animation: fadeIn 0.4s ease; }
+        .question-text { font-size: clamp(1.2rem, 1rem + 1vw, 1.6rem); font-weight: 500; line-height: 1.4; margin-bottom: 2.5rem; }
 
         .input-container {
-            position: relative;
-            display: flex;
-            align-items: flex-end;
-            gap: 1rem;
-            border-bottom: 1px solid var(--border-color);
-            transition: border-color 0.3s ease;
-            background: rgba(10, 14, 20, 0.4);
-            padding: 0 0.5rem;
+            position: relative; display: flex; align-items: flex-end; gap: 1rem; border-bottom: 1px solid var(--border-color); background: rgba(10, 14, 20, 0.4);
         }
-
-        .input-container:focus-within {
-            border-color: var(--accent);
-        }
-
         .input-container textarea {
-            width: 100%;
-            background-color: transparent;
-            border: none;
-            color: var(--text-main);
-            font-family: var(--font-sans);
-            font-size: clamp(1rem, 0.95rem + 0.5vw, 1.2rem);
-            line-height: 1.55;
-            padding: 1rem 0;
-            resize: none;
-            outline: none;
+            width: 100%; background: transparent; border: none; color: var(--text-main); font-family: var(--font-sans);
+            font-size: 1.1rem; line-height: 1.5; padding: 1rem 0; resize: none; outline: none;
         }
 
         .mic-btn {
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            padding: 0.85rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-muted);
-            transition: all 0.3s ease;
-            position: relative;
-            border-radius: 50%;
-            margin-bottom: 0.5rem;
+            background: transparent; border: none; cursor: pointer; padding: 0.75rem; display: flex; align-items: center; justify-content: center; color: var(--text-muted); border-radius: 50%; margin-bottom: 0.5rem;
         }
-
-        .mic-btn:hover {
-            color: var(--accent);
-            background-color: rgba(0, 245, 212, 0.08);
-        }
-
-        .mic-btn.recording {
-            color: var(--accent-alert);
-            background-color: rgba(255, 74, 74, 0.1);
-            animation: pulseGlow 1.5s infinite ease-in-out;
-        }
-
-        .terminal-footer {
-            margin-top: 3.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+        .mic-btn:hover { color: var(--accent); background-color: rgba(0, 245, 212, 0.08); }
+        .mic-btn.recording { color: var(--accent-alert); background-color: rgba(255, 74, 74, 0.1); animation: pulseGlow 1.5s infinite ease-in-out; }
 
         .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 1rem;
-            background-color: transparent;
-            color: var(--text-main);
-            border: 1px solid var(--border-color);
-            padding: 1rem 2rem;
-            font-family: var(--font-mono);
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
+            display: inline-flex; align-items: center; gap: 1rem; background-color: transparent; color: var(--text-main);
+            border: 1px solid var(--border-color); padding: 1rem 2rem; font-family: var(--font-mono); font-size: 0.85rem; text-transform: uppercase; cursor: pointer; text-decoration: none;
         }
+        .btn:hover { border-color: var(--accent); background-color: var(--accent-dim); color: var(--accent); }
+        .btn-disabled { opacity: 0.2; pointer-events: none; }
 
-        .btn:hover {
-            border-color: var(--accent);
-            background-color: var(--accent-dim);
-            color: var(--accent);
-            box-shadow: 0 0 12px rgba(0, 245, 212, 0.1);
-        }
-
-        .btn-disabled {
-            opacity: 0.2;
-            pointer-events: none;
-        }
-
-        ul {
-            list-style: none;
-            margin-top: 1rem;
-        }
-
-        ul li {
-            position: relative;
-            padding-left: 1.5rem;
-            margin-bottom: 0.85rem;
-            color: var(--text-muted);
-            line-height: 1.55;
-        }
-
-        ul li::before {
-            content: "—";
-            position: absolute;
-            left: 0;
-            color: var(--accent);
-        }
-
-        /* Слои управления мультиязычностью через дата-аттрибуты */
-        [data-lang-content] {
-            display: none;
-        }
-
-        body.lang-ru [data-lang-content="ru"] {
-            display: block;
-        }
-
-        body.lang-en [data-lang-content="en"] {
-            display: block;
-        }
-
-        span[data-lang-content] {
-            display: inline !important;
-        }
-        body.lang-ru span[data-lang-content="en"],
-        body.lang-en span[data-lang-content="ru"] {
-            display: none !important;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes pulseGlow {
-            0% { box-shadow: 0 0 0 0 rgba(255, 74, 74, 0.4); }
-            70% { box-shadow: 0 0 0 10px rgba(255, 74, 74, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(255, 74, 74, 0); }
-        }
-
-        @media (max-width: 480px) {
-            .terminal-footer {
-                flex-direction: column-reverse;
-                gap: 1.2rem;
-                align-items: stretch;
-            }
-            .btn {
-                justify-content: center;
-            }
-        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes pulseGlow { 0% { box-shadow: 0 0 0 0 rgba(255, 74, 74, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(255, 74, 74, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 74, 74, 0); } }
     </style>
 </head>
-<body class="lang-ru">
+<body>
 
     <div class="matrix-grid"></div>
 
-    <div class="lang-switcher">
-        <button class="lang-btn" id="lang-btn-ru" onclick="setLanguage('ru')">RU</button>
+    <div class="top-bar">
+        <button class="lang-btn" id="lang-btn-ru" onclick="changeLang('ru')">RU</button>
         <span style="color:var(--border-color)">|</span>
-        <button class="lang-btn" id="lang-btn-en" onclick="setLanguage('en')">EN</button>
+        <button class="lang-btn" id="lang-btn-en" onclick="changeLang('en')">EN</button>
     </div>
 
     <div class="container">
 
-        <section id="hero">
-            <div class="meta-header">Protocol: Anthroponomy // Ref: rivelazione.org // Status: Active</div>
-            
-            <div data-lang-content="ru">
-                <h1>Почему реализуется не весь человеческий потенциал?</h1>
-                <div class="lead-text">
-                    <p>Большинство людей не сомневаются в наличии своего потенциала. Они сомневаются в своей способности развернуть его в реальном мире.</p>
-                    <p>Anthroponomy исследует скрытые системные ограничения, которые отделяют проектную мощность от фактического результата.</p>
-                </div>
-            </div>
-            <div data-lang-content="en">
-                <h1>Why is not all human potential realized?</h1>
-                <div class="lead-text">
-                    <p>Most people do not doubt their potential. They doubt their ability to realize it.</p>
-                    <p>Anthroponomy investigates the hidden constraints that separate possibility from reality.</p>
-                </div>
-            </div>
-
-            <div style="display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 2rem;">
-                <a href="#protocol" class="btn">
-                    <span data-lang-content="ru">Войти в протокол исследования →</span>
-                    <span data-lang-content="en">Enter Research Protocol →</span>
-                </a>
-            </div>
-        </section>
-
-        <section id="core-problem">
-            <h2 data-lang-content="ru">02 // Суть проблемы</h2>
-            <h2 data-lang-content="en">02 // The Core Problem</h2>
+        <!-- ЭКРАН 1: Очеловеченный манифест -->
+        <section id="intro">
+            <h1 id="main-headline">Почему реализуется лишь часть того, на что вы способны?</h1>
             
             <div class="lead-text">
-                <div data-lang-content="ru">
-                    <p>Человек может видеть масштаб, обладать талантом, иметь глубокий опыт, понимать направление, сохранять предельную мотивацию — и все равно раз за разом сталкиваться с невидимым потолком.</p>
-                    <p>Anthroponomy переводит этот разрыв из плоскости психологии или морали в плоскость <strong>чистого инженерного анализа</strong>.</p>
-                </div>
-                <div data-lang-content="en">
-                    <p>A person may see scale, have talent, possess knowledge, understand direction, remain highly motivated — and still fail to realize their full potential.</p>
-                    <p>Anthroponomy treats this as an <strong>engineering question</strong>. Not a moral question.</p>
+                <p id="main-subheadline">Вы чувствуете масштаб своих возможностей, понимаете направление и обладаете опытом — но постоянно сталкиваетесь с невидимым внутренним сопротивлением.</p>
+                <p id="main-body">Мы исследуем этот разрыв не как психологическую проблему или нехватку мотивации. Это сугубо инженерный вопрос распределения ресурсов вашего тела, внимания и фокуса.</p>
+            </div>
+
+            <!-- ИНТЕРАКТИВНЫЙ ВХОД: Выбор роли -->
+            <div class="role-selector-box">
+                <div class="role-title" id="role-box-title">Выберите вашу ключевую роль в жизни:</div>
+                <div class="role-grid">
+                    <div class="role-card active" onclick="selectRole('biz')">Предприниматель</div>
+                    <div class="role-card" onclick="selectRole('tech')">IT / Инженер</div>
+                    <div class="role-card" onclick="selectRole('creator')">Творец / Создатель</div>
+                    <div class="role-card" onclick="selectRole('exec')">Руководитель</div>
                 </div>
             </div>
         </section>
 
-        <section id="potential-horizon">
-            <h2 data-lang-content="ru">03 // Горизонт потенциала</h2>
-            <h2 data-lang-content="en">03 // Potential Horizon</h2>
-            
-            <div class="definition-box">
-                <div class="definition-title">System Param // Core Definition</div>
-                <p data-lang-content="ru"><strong>Горизонт потенциала</strong> — Масштаб созидания и влияния, который человек воспринимает как естественный и внутренне правильный для себя.</p>
-                <p data-lang-content="en"><strong>Potential Horizon</strong> — The scale of possibility a person perceives throughout life.</p>
-            </div>
-            <div class="lead-text">
-                <div data-lang-content="ru">
-                    <p>Осознание нереализованных возможностей — это не иллюзия и не повод для рефлексии. Для нас это устойчивый диагностический сигнал, подлежащий строгой оцифровке.</p>
-                </div>
-                <div data-lang-content="en">
-                    <p>Many people carry a persistent awareness that they are capable of more. Anthroponomy treats this as an observable signal requiring investigation.</p>
-                </div>
+        <!-- ЭКРАН 2: Диагностический блок боли (Адаптивный) -->
+        <section id="pain-block">
+            <h2 id="pain-title">Где ваша система теряет мощность?</h2>
+            <div class="lead-text" id="pain-desc">
+                <p>Когда вы пытаетесь масштабировать проекты, ваш мозг начинает «буксовать». Вы списываете это на лень, прокрастинацию или возраст. Но дело в другом: система просто блокирует вывод энергии, чтобы защитить себя от скрытого внутреннего трения.</p>
             </div>
         </section>
 
-        <section id="available-capacity">
-            <h2 data-lang-content="ru">04 // Эффективная емкость</h2>
-            <h2 data-lang-content="en">04 // Available Capacity</h2>
-            
-            <div class="definition-box">
-                <div class="definition-title">System Param // Friction Audit</div>
-                <p data-lang-content="ru"><strong>Эффективная емкость</strong> — Объем чистой, полезной энергии системы, доступный для когнитивного и творческого вывода в текущий момент времени.</p>
-                <p data-lang-content="en"><strong>Available Capacity</strong> — The amount of usable system power currently available.</p>
-            </div>
-            <div class="lead-text">
-                <div data-lang-content="ru">
-                    <p>Сам потенциал может оставаться неизменным, но если внутренняя архитектура перегружена биомеханическим шумом, эффективная емкость падает, увеличивая разрыв реализации.</p>
-                </div>
-                <div data-lang-content="en">
-                    <p>Potential may remain stable while available capacity decreases due to internal friction. This creates a widening realization gap.</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="capacity-reallocation">
-            <h2 data-lang-content="ru">05 // Перераспределение ресурсов</h2>
-            <h2 data-lang-content="en">05 // Capacity Reallocation</h2>
-            
-            <div class="lead-text">
-                <div data-lang-content="ru">
-                    <p>Высокие социальные результаты часто финансируются за счет скрытых, аварийных займов у критических слоев системы:</p>
-                    <ul>
-                        <li>Биомеханическая симметрия и тонус физического каркаса</li>
-                        <li>Глубокие фазы сна и процессы нейрорегенерации</li>
-                        <li>Устойчивость внимания и базовая плотность фокуса</li>
-                    </ul>
-                </div>
-                <div data-lang-content="en">
-                    <p>Many achievements are financed by hidden withdrawals from critical system layers:</p>
-                    <ul>
-                        <li>Sleep & Bio-mechanical recovery</li>
-                        <li>Health integrity and alignment</li>
-                        <li>Sustained attention & focus</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <section id="potential-twin">
-            <h2 data-lang-content="ru">06 // Цифровой двойник потенциала</h2>
-            <h2 data-lang-content="en">06 // Human Potential Twin</h2>
-            
-            <div class="definition-box">
-                <div class="definition-title">Model Layer // Computational Matrix</div>
-                <p data-lang-content="ru"><strong>Human Potential Twin</strong> — Вычислительная модель траектории реализации человека, построенная на базе поведенческих маркеров.</p>
-                <p data-lang-content="en"><strong>Human Potential Twin</strong> — A computational representation of a person’s realization trajectory.</p>
-            </div>
-            <div class="lead-text">
-                <div data-lang-content="ru">
-                    <p>Двойник синтезируется на основе первичных векторов сигналов (ISV). Это не статичный диагноз — это динамическая карта для поиска скрытых точек торможения.</p>
-                </div>
-                <div data-lang-content="en">
-                    <p>The twin is generated from raw observations and trajectory analysis. It is not a prediction, but a structured research model.</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="research-flow">
-            <h2 data-lang-content="ru">07 // Архитектура обработки потока данных</h2>
-            <h2 data-lang-content="en">07 // Anthroponomy Research Flow</h2>
-            
-            <div class="flow-container">
-                <div class="flow-node">Human Observation</div>
-                <div class="flow-arrow">↓</div>
-                <div class="flow-node">RAW Observations</div>
-                <div class="flow-arrow">↓</div>
-                <div class="flow-node">Initial Signal Vector (ISV)</div>
-                <div class="flow-arrow">↓</div>
-                <div class="flow-node">Signal Threshold Engine (STE)</div>
-                <div class="flow-arrow">↓</div>
-                <div class="flow-node">Capacity Reallocation Profile</div>
-                <div class="flow-arrow">↓</div>
-                <div class="flow-node">Human Potential Twin Snapshot</div>
-                <div class="flow-arrow">↓</div>
-                <div class="flow-node">Trajectory Analysis Database</div>
-            </div>
-        </section>
-
-        <section id="participation">
-            <h2 data-lang-content="ru">08 // Этапы интейк-контура</h2>
-            <h2 data-lang-content="en">08 // Research Steps</h2>
-            
-            <div class="grid-two">
-                <div class="grid-card">
-                    <h3>01 // Calibration</h3>
-                    <p style="color: var(--text-muted);" data-lang-content="ru">Фиксация базовых параметров восприятия масштаба.</p>
-                    <p style="color: var(--text-muted);" data-lang-content="en">Establishing base values of perceived horizon limits.</p>
-                </div>
-                <div class="grid-card">
-                    <h3>02 // Observation</h3>
-                    <p style="color: var(--text-muted);" data-lang-content="ru">Сбор высокоточных речевых и поведенческих паттернов.</p>
-                    <p style="color: var(--text-muted);" data-lang-content="en">Collecting high-fidelity linguistic and telemetry markers.</p>
-                </div>
-                <div class="grid-card">
-                    <h3>03 // Signal Analysis</h3>
-                    <p style="color: var(--text-muted);" data-lang-content="ru">Математический расчет весов внутреннего трения системы.</p>
-                    <p style="color: var(--text-muted);" data-lang-content="en">Processing system parameters through computational engines.</p>
-                </div>
-                <div class="grid-card">
-                    <h3>04 // Mapping</h3>
-                    <p style="color: var(--text-muted);" data-lang-content="ru">Проекция признаков на многомерную координатную карту.</p>
-                    <p style="color: var(--text-muted);" data-lang-content="en">Allocating response metrics to multi-dimensional maps.</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="ethics">
-            <h2 data-lang-content="ru">09 // Правовой и этический статус</h2>
-            <h2 data-lang-content="en">09 // Research Ethics</h2>
-            
-            <div class="lead-text">
-                <div data-lang-content="ru">
-                    <p>Платформа не ставит медицинских диагнозов, не занимается лечением и не предлагает готовых терапевтических решений.</p>
-                    <p>Проект функционирует исключительно как исследовательская среда для изучения фундаментальных законов реализации человека.</p>
-                </div>
-                <div data-lang-content="en">
-                    <p>The platform does not diagnose, treat, or replace professional care. It does not guarantee commercial outcomes.</p>
-                    <p>The platform exists solely to advance research into human potential realization frameworks.</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="manifesto">
-            <h2 data-lang-content="ru">10 // Манифест</h2>
-            <h2 data-lang-content="en">10 // Research Manifesto</h2>
-            
-            <div class="lead-text" style="border-left: 2px solid var(--accent); padding-left: 2rem; font-style: italic;">
-                <p data-lang-content="ru">"Ваш масштаб не подвергается сомнению. Мы исходим из того, что вы физически ощущаете его присутствие. Вопрос в другом: почему реальность пропускает лишь малую часть этой мощности? Наша цель — сделать скрытые барьеры видимыми."</p>
-                <p data-lang-content="en">"Your potential is not on trial. We begin from the assumption that you already feel its existence. The question is different: Why is only part of that potential becoming reality? To answer that question, we must make invisible constraints visible."</p>
-            </div>
-        </section>
-
+        <!-- ЭКРАН 3: Интерактивный Терминал Вопросов -->
         <section id="protocol">
-            <h2 data-lang-content="ru">11 // Вход в исследовательский протокол</h2>
-            <h2 data-lang-content="en">11 // Research Protocol Entry</h2>
+            <h2 id="terminal-title">Аудит личной эффективности</h2>
             
-            <div class="flow-container" style="max-width: 100%; margin-bottom: 3rem; font-size: 0.75rem;">
-                <div class="flow-node" style="padding: 0.5rem; color: var(--accent);">
-                    Potential Horizon Origin → Potential Realization Gap → Available Capacity → Structural Constraint Signal
-                </div>
-            </div>
-
             <div class="terminal-box">
                 <div class="terminal-header">
-                    <span id="terminal-step-id">SYS_MAPPING // STEP 1 OF 5</span>
-                    <span id="terminal-progress">PROGRESS: 20%</span>
+                    <span id="terminal-step-id">АНАЛИЗ // ШАГ 1 ИЗ 5</span>
+                    <span id="terminal-progress">ПРОГРЕСС: 20%</span>
                 </div>
 
                 <form id="research-form" onsubmit="event.preventDefault();">
+                    <!-- Q1 -->
                     <div class="question-wrapper active" data-step="1">
-                        <div class="question-context">System Calibration // Potential Horizon [t_0]</div>
-                        <div class="question-text">
-                            <span data-lang-content="ru">Каким вы представляли своё будущее в начале пути? Какой масштаб жизни, векторов влияния и созидания казался вам естественным и правильным?</span>
-                            <span data-lang-content="en">How did you imagine your future at the beginning of the journey? What scale of life and creation felt natural and right to you?</span>
-                        </div>
+                        <div class="question-text" id="q1-text">Каким вы представляли свой масштаб деятельности в начале пути, и какой уровень реализации кажется вам правильным сейчас?</div>
                         <div class="input-container">
-                            <textarea rows="3" placeholder="..." required></textarea>
-                            <button type="button" class="mic-btn" title="Voice Stream Input">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
+                            <textarea rows="3" id="textarea-1" placeholder="Нажмите кнопку микрофона справа или введите текст руками..."></textarea>
+                            <button type="button" class="mic-btn">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
                             </button>
                         </div>
                     </div>
 
+                    <!-- Q2 -->
                     <div class="question-wrapper" data-step="2">
-                        <div class="question-context">Target Matrix // Potential Realization</div>
-                        <div class="question-text">
-                            <span data-lang-content="ru">Что вы планировали и были внутренне готовы реализовать за последние годы, но проект остался нереализованным?</span>
-                            <span data-lang-content="en">What did you plan and feel ready to realize in recent years, but the project remained unrealized?</span>
-                        </div>
+                        <div class="question-text" id="q2-text">Какая важная задача или большая цель буксует дольше всего, несмотря на то, что у вас есть все ресурсы для её выполнения?</div>
                         <div class="input-container">
-                            <textarea rows="3" placeholder="..." required></textarea>
-                            <button type="button" class="mic-btn" title="Voice Stream Input">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
-                            </button>
+                            <textarea rows="3" id="textarea-2" placeholder="..."></textarea>
+                            <button type="button" class="mic-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg></button>
                         </div>
                     </div>
 
+                    <!-- Q3 -->
                     <div class="question-wrapper" data-step="3">
-                        <div class="question-context">Efficiency Analysis // Effective Capacity</div>
-                        <div class="question-text">
-                            <span data-lang-content="ru">В какой момент стандартного дня вы чувствуете, что фокус падает и система переходит в режим принудительного выживания?</span>
-                            <span data-lang-content="en">At what exact moment of a standard day do you feel focus drop, shifting the system into forced survival mode?</span>
-                        </div>
+                        <div class="question-text" id="q3-text">В какое время дня вы чаще всего ловите себя на том, что фокус полностью потерян и вы просто имитируете деятельность?</div>
                         <div class="input-container">
-                            <textarea rows="3" placeholder="..." required></textarea>
-                            <button type="button" class="mic-btn" title="Voice Stream Input">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
-                            </button>
+                            <textarea rows="3" id="textarea-3" placeholder="..."></textarea>
+                            <button type="button" class="mic-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg></button>
                         </div>
                     </div>
 
+                    <!-- Q4 -->
                     <div class="question-wrapper" data-step="4">
-                        <div class="question-context">Hardware Configuration // Features</div>
-                        <div class="question-text">
-                            <span data-lang-content="ru">Какие маркеры вы фиксируете на уровне физического каркаса (зажимы в шее, мигрени, асимметрия, фоновая вялость)?</span>
-                            <span data-lang-content="en">What structural markers do you notice physically (neck tension, migraines, asymmetry, chronic lethargy)?</span>
-                        </div>
+                        <div class="question-text" id="q4-text">Где физически вы чувствуете это сопротивление (тяжесть в шее, скованность плеч, фоновая вялость, головные боли к вечеру)?</div>
                         <div class="input-container">
-                            <textarea rows="3" placeholder="..." required></textarea>
-                            <button type="button" class="mic-btn" title="Voice Stream Input">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
-                            </button>
+                            <textarea rows="3" id="textarea-4" placeholder="..."></textarea>
+                            <button type="button" class="mic-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg></button>
                         </div>
                     </div>
 
+                    <!-- Q5 -->
                     <div class="question-wrapper" data-step="5">
-                        <div class="question-context">Energy Balance // Available Capacity</div>
-                        <div class="question-text">
-                            <span data-lang-content="ru">Какую долю энергии, по вашей внутренней оценке, система тратит впустую на удержание баланса и борьбу со скрытым трением?</span>
-                            <span data-lang-content="en">What percentage of energy do you estimate the system wastes on holding balance and fighting hidden internal friction?</span>
-                        </div>
+                        <div class="question-text" id="q5-text">Какую часть своей жизненной энергии вы, по собственному ощущению, тратите впустую на удержание баланса и борьбу со стрессом?</div>
                         <div class="input-container">
-                            <textarea rows="3" placeholder="..." required></textarea>
-                            <button type="button" class="mic-btn" title="Voice Stream Input">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
-                            </button>
+                            <textarea rows="3" id="textarea-5" placeholder="..."></textarea>
+                            <button type="button" class="mic-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg></button>
                         </div>
                     </div>
                 </form>
 
                 <div class="terminal-footer">
-                    <button type="button" id="btn-prev" class="btn btn-disabled">
-                        <span data-lang-content="ru">← Назад</span>
-                        <span data-lang-content="en">← Back</span>
-                    </button>
-                    <button type="button" id="btn-next" class="btn">
-                        <span data-lang-content="ru">Далее →</span>
-                        <span data-lang-content="en">Next →</span>
-                    </button>
+                    <button type="button" id="btn-prev" class="btn btn-disabled">Назад</button>
+                    <button type="button" id="btn-next" class="btn">Далее →</button>
                 </div>
             </div>
         </section>
-
     </div>
 
-    <script src="./js/20_frontend.js"></script>
-
+    <!-- ЯЗЫКОВОЙ И РОЛЕВОЙ СЛОВАРЬ (КОНТЕНТНЫЙ СЛОЙ) -->
     <script>
-        const steps = document.querySelectorAll('.question-wrapper');
-        const btnNext = document.getElementById('btn-next');
-        const btnPrev = document.getElementById('btn-prev');
-        const stepIdText = document.getElementById('terminal-step-id');
-        const progressText = document.getElementById('terminal-progress');
-        let currentStep = 1;
-
-        let runtimeSession = null;
-        let currentLang = 'ru';
-
-        // 1. Автоопределение языка на основе локали браузера
-        document.addEventListener("DOMContentLoaded", async () => {
-            const userLang = navigator.language || navigator.userLanguage;
-            if (userLang && !userLang.startsWith('ru')) {
-                setLanguage('en');
-            } else {
-                setLanguage('ru');
+        const contentMatrix = {
+            ru: {
+                headlines: {
+                    title: "Почему реализуется лишь часть того, на что вы способны?",
+                    sub: "Вы чувствуете масштаб своих возможностей, понимаете направление и обладаете опытом — но постоянно сталкиваетесь с невидимым внутренним сопротивлением.",
+                    body: "Мы исследуем этот разрыв не как психологическую проблему или нехватку мотивации. Это сугубо инженерный вопрос распределения ресурсов вашего тела, внимания и фокуса.",
+                    roleTitle: "Выберите вашу ключевую роль в жизни:",
+                    painTitle: "Где ваша система теряет мощность?",
+                    termTitle: "Аудит личной эффективности"
+                },
+                roles: ["Предприниматель", "IT / Инженер", "Творец / Создатель", "Руководитель"],
+                painDesc: {
+                    biz: "Когда вы пытаетесь масштабировать бизнес, мозг начинает «буксовать». Вы списываете это на усталость от команды или рынка. Но дело в другом: проектная нагрузка вошла в резонанс с зажимами в теле, и система заблокировала вывод энергии, чтобы защитить себя.",
+                    tech: "Ваш личный процессор перегрет. Вы можете часами рефакторить мелкие задачи, но откладываете архитектурные прорывы. Это не лень — это внутренний биомеханический шум сжирает стек оперативной памяти вашего внимания.",
+                    creator: "Вы упираетесь в кризис идей и прокрастинацию. Вы ждете вдохновения, но проблема физиологична: деформация осанки и шеи ограничивает кровоток, блокируя когнитивный контур генерации смыслов.",
+                    exec: "Цена ваших решений растет, а базовая емкость падает. Вы финансируете операционные результаты за счет скрытых кредитов у собственного сна и здоровья. Система работает на пределе эффективной мощности."
+                },
+                questions: [
+                    "Каким вы представляли свой масштаб деятельности в начале пути, и какой уровень реализации кажется вам правильным сейчас?",
+                    "Какая важная задача или большая цель буксует дольше всего, несмотря на то, что у вас есть все ресурсы для её выполнения?",
+                    "В какое время дня вы чаще всего ловите себя на том, что фокус полностью потерян и вы просто имитируете деятельность?",
+                    "Где физически вы чувствуете это сопротивление (тяжесть в шее, скованность плеч, фоновая вялость, головные боли к вечеру)?",
+                    "Какую часть своей жизненной энергии вы, по собственному ощущению, тратите впустую на удержание баланса и борьбу со стрессом?"
+                ],
+                ui: { next: "Далее →", prev: "← Назад", process: "Фиксация...", final: "Передать пакет данных ✓", alert: "Аудит завершен. Данные сохранены.", step: "АНАЛИЗ // ШАГ", progress: "ПРОГРЕСС", placeholder: "Нажмите кнопку микрофона справа или введите текст руками..." }
+            },
+            en: {
+                headlines: {
+                    title: "Why is not all your potential realized?",
+                    sub: "You perceive the true scale of your capabilities, see the direction, and have the experience — yet you constantly face an invisible internal friction.",
+                    body: "We investigate this gap not as a psychological flaw or lack of drive. It is a strict engineering question of how your body, focus, and energy capacity are distributed.",
+                    roleTitle: "Select your primary role in life:",
+                    painTitle: "Where is your system losing power?",
+                    termTitle: "Personal Efficiency Audit"
+                },
+                roles: ["Entrepreneur", "IT / Engineer", "Creator / Artist", "Executive"],
+                painDesc: {
+                    biz: "When trying to scale your venture, your capacity hits a ceiling. You blame market fatigue or your team. In reality, the strategic workload has caused internal friction, and your system throttles energy output to protect itself.",
+                    tech: "Your personal CPU is overheating. You spend hours refactoring minor subtasks while pushing away major architectural updates. This isn't laziness — internal bio-mechanical noise is hogging your attention span's RAM.",
+                    creator: "You face creative blocks and endless procrastination. You wait for inspiration, but the block is physical: structural stress compromises blood flow, bottlenecking your cognitive creative engine.",
+                    exec: "The cost of your decisions is rising while your baseline energy drops. You fund operational targets by borrowing heavy credits from your sleep and physical recovery. The system is running out of clean power."
+                },
+                questions: [
+                    "How did you visualize the scale of your achievements early on, and what level of realization feels correct to you today?",
+                    "What critical objective or massive goal has been stalling the longest, even though you possess all the resources to complete it?",
+                    "At what exact time of day do you usually notice that your focus is entirely gone and you are merely simulating work?",
+                    "Where do you physically sense this resistance (neck tightness, heavy shoulders, chronic lethargy, late-day headaches)?",
+                    "What percentage of your total life energy do you estimate is wasted purely on maintaining balance and absorbing stress?"
+                ],
+                ui: { next: "Next →", prev: "← Back", process: "Securing...", final: "Submit Observation Packet ✓", alert: "Audit completed. Data safely stored.", step: "ANALYSIS // STEP", progress: "PROGRESS", placeholder: "Click the microphone button to speak or type your response here..." }
             }
+        };
 
+        let currentLang = 'ru';
+        let currentRole = 'biz';
+        let currentStep = 1;
+        let runtimeSession = null;
+
+        document.addEventListener("DOMContentLoaded", async () => {
+            // Определение языка
+            const userLang = navigator.language || navigator.userLanguage;
+            currentLang = (userLang && !userLang.startsWith('ru')) ? 'en' : 'ru';
+            
+            renderContent();
+
+            // Инициализация бэкенда
             const WORKER_URL = "https://api.rivelazione.org"; 
             const PARTICIPANT_ID = "part_" + Math.floor(100000 + Math.random() * 900000);
             const STUDY_ID = "anthroponomy_intake_v1";
 
             try {
                 runtimeSession = await window.AnthroponomyRuntime.launch(WORKER_URL, PARTICIPANT_ID, STUDY_ID);
-                console.log("[Anthroponomy Runtime]: Контур успешно запущен. Мониторинг активен.");
                 initInterfaceBindings();
-            } catch (error) {
-                console.error("[Anthroponomy Init Error]: Сбой запуска рантайма:", error);
-            }
+            } catch (e) { console.error("[Anthroponomy Init Error]:", e); }
         });
 
-        // Функция принудительного переключения локали
-        function setLanguage(lang) {
+        function changeLang(lang) {
             currentLang = lang;
-            document.body.className = 'lang-' + lang;
+            renderContent();
+        }
+
+        function selectRole(role) {
+            currentRole = role;
+            const cards = document.querySelectorAll('.role-card');
+            const roleKeys = ['biz', 'tech', 'creator', 'exec'];
             
+            cards.forEach((card, idx) => {
+                card.classList.remove('active');
+                if (roleKeys[idx] === role) card.classList.add('active');
+            });
+
+            document.getElementById('pain-desc').innerHTML = `<p>${contentMatrix[currentLang].painDesc[currentRole]}</p>`;
+        }
+
+        function renderContent() {
+            const data = contentMatrix[currentLang];
+            
+            // Кнопки языка
             document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-            const activeBtn = document.getElementById('lang-btn-' + lang);
-            if (activeBtn) activeBtn.classList.add('active');
+            document.getElementById(`lang-btn-${currentLang}`).classList.add('active');
+
+            // Тексты
+            document.getElementById('main-headline').innerText = data.headlines.title;
+            document.getElementById('main-subheadline').innerText = data.headlines.sub;
+            document.getElementById('main-body').innerText = data.headlines.body;
+            document.getElementById('role-box-title').innerText = data.headlines.roleTitle;
+            document.getElementById('pain-title').innerText = data.headlines.painTitle;
+            document.getElementById('terminal-title').innerText = data.headlines.termTitle;
+
+            // Роли в кнопках
+            const cards = document.querySelectorAll('.role-card');
+            cards[0].innerText = data.roles[0];
+            cards[1].innerText = data.roles[1];
+            cards[2].innerText = data.roles[2];
+            cards[3].innerText = data.roles[3];
+
+            // Описание боли под роль
+            document.getElementById('pain-desc').innerHTML = `<p>${data.painDesc[currentRole]}</p>`;
+
+            // Вопросы в терминале
+            for (let i = 1; i <= 5; i++) {
+                document.getElementById(`q${i}-text`).innerText = data.questions[i-1];
+                document.getElementById(`textarea-${i}`).placeholder = data.ui.placeholder;
+            }
+
+            updateTerminalUI();
+        }
+
+        function updateTerminalUI() {
+            const data = contentMatrix[currentLang].ui;
+            const stepsCount = document.querySelectorAll('.question-wrapper').length;
+            
+            const btnNext = document.getElementById('btn-next');
+            const btnPrev = document.getElementById('btn-prev');
+
+            if (currentStep === stepsCount) {
+                btnNext.innerText = data.final;
+            } else {
+                btnNext.innerText = data.next;
+            }
+
+            btnPrev.innerText = data.prev;
+            document.getElementById('terminal-step-id').innerText = `${data.step} ${currentStep} ${currentLang === 'ru' ? 'ИЗ' : 'OF'} ${stepsCount}`;
+            document.getElementById('terminal-progress').innerText = `${data.progress}: ${Math.round((currentStep / stepsCount) * 100)}%`;
+        }
+
+        function initInterfaceBindings() {
+            if (!runtimeSession) return;
+
+            document.querySelectorAll('.question-wrapper').forEach((wrapper, idx) => {
+                const textarea = wrapper.querySelector('textarea');
+                const micBtn = wrapper.querySelector('.mic-btn');
+                
+                if (micBtn && textarea) {
+                    runtimeSession.voiceEngine.onBufferUpdate = (text) => { textarea.value = text; };
+
+                    micBtn.addEventListener('click', () => {
+                        if (runtimeSession.voiceEngine.isStarted) {
+                            runtimeSession.voiceEngine.stop();
+                            micBtn.classList.remove('recording');
+                        } else {
+                            const success = runtimeSession.voiceEngine.start();
+                            if (success) {
+                                micBtn.classList.add('recording');
+                                textarea.focus();
+                            }
+                        }
+                    });
+                }
+            });
+
+            // Отслеживание правок текста фронтенд-модулем телеметрии
+            document.querySelectorAll('.input-container textarea').forEach(textarea => {
+                textarea.addEventListener('input', () => {
+                    runtimeSession.evidenceCore.evidence.manual_edit_count++;
+                    runtimeSession.evidenceCore.researchProfile.correction_density = 
+                        parseFloat((runtimeSession.evidenceCore.evidence.manual_edit_count / Math.max(textarea.value.length, 1)).toFixed(3));
+                    runtimeSession.evidenceCore.logEvent('ui_manual_edit');
+                });
+            });
+        }
+
+        async function handleStepSubmission() {
+            const stepsWrappers = document.querySelectorAll('.question-wrapper');
+            const currentWrapper = stepsWrappers[currentStep - 1];
+            const currentTextarea = currentWrapper.querySelector('textarea');
+            const currentMicBtn = currentWrapper.querySelector('.mic-btn');
+            
+            const textData = currentTextarea.value.trim();
+            const dataUI = contentMatrix[currentLang].ui;
+
+            if (!textData) {
+                currentTextarea.parentElement.style.borderColor = "var(--accent-alert)";
+                return;
+            }
+            currentTextarea.parentElement.style.borderColor = "var(--border-color)";
+
+            if (runtimeSession && runtimeSession.voiceEngine.isStarted) {
+                runtimeSession.voiceEngine.stop();
+                if (currentMicBtn) currentMicBtn.classList.remove('recording');
+            }
+
+            const btnNext = document.getElementById('btn-next');
+            btnNext.classList.add('btn-disabled');
+            btnNext.innerText = dataUI.process;
+
+            try {
+                // Передаем ответ с метаданными роли в бэкенд D1
+                await runtimeSession.submitAnswer(`Q_STEP_0${currentStep}_ROLE_${currentRole.toUpperCase()}`, textData);
+                
+                if (currentStep < stepsWrappers.length) {
+                    stepsWrappers[currentStep - 1].classList.remove('active');
+                    currentStep++;
+                    stepsWrappers[currentStep - 1].classList.add('active');
+                    updateTerminalUI();
+                } else {
+                    btnNext.innerText = "✓";
+                    alert(dataUI.alert);
+                    runtimeSession.sm.transition('COMPLETED');
+                }
+            } catch (error) {
+                console.error(error);
+                alert("Network Loop Retention Active.");
+            } finally {
+                if (currentStep < stepsWrappers.length) {
+                    btnNext.classList.remove('btn-disabled');
+                }
+            }
+        }
+
+        document.getElementById('btn-next').addEventListener('click', handleStepSubmission);
+        document.getElementById('btn-prev').addEventListener('click', () => {
+            if (currentStep > 1) {
+                const stepsWrappers = document.querySelectorAll('.question-wrapper');
+                stepsWrappers[currentStep - 1].classList.remove('active');
+                currentStep--;
+                stepsWrappers[currentStep - 1].classList.add('active');
+                updateTerminalUI();
+            }
+        });
+    </script>
+</body>
+</html>
