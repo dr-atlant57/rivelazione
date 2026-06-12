@@ -74,9 +74,9 @@
 
         .container {
             width: 100%;
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 6rem calc(1rem + 2vw);
+            padding: 4rem calc(1rem + 2vw);
             position: relative;
             z-index: 2;
         }
@@ -103,15 +103,13 @@
             border-radius: 50%;
         }
 
-        section {
+        .screen-manifesto {
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
             border-bottom: 1px solid var(--border-color);
-            padding-bottom: 6rem;
-            margin-bottom: 6rem;
-        }
-
-        section:last-of-type {
-            border-bottom: none;
-            margin-bottom: 0;
+            padding-bottom: 4rem;
         }
 
         h1 {
@@ -122,23 +120,11 @@
             margin-bottom: 2rem;
         }
 
-        h2 {
-            font-size: clamp(1.6rem, 1.2rem + 2vw, 2.5rem);
-            letter-spacing: -0.02em;
-            margin-bottom: 2.5rem;
-            font-weight: 600;
-        }
-
-        h3 {
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
-            font-weight: 500;
-        }
-
         .lead-text {
             font-size: clamp(1.1rem, 0.9rem + 1vw, 1.4rem);
             line-height: 1.6;
             color: var(--text-muted);
+            max-width: 900px;
             margin-bottom: 3rem;
         }
 
@@ -151,53 +137,59 @@
             font-weight: 500;
         }
 
-        .definition-box {
-            background-color: var(--bg-surface);
-            border-left: 3px solid var(--accent);
-            padding: 1.5rem;
-            margin: 2rem 0;
-            font-family: var(--font-sans);
+        .screen-engine {
+            padding: 6rem 0;
+            border-bottom: 1px solid var(--border-color);
         }
 
-        .definition-title {
+        h2 {
+            font-size: clamp(1.6rem, 1.2rem + 2vw, 2.5rem);
+            letter-spacing: -0.02em;
+            margin-bottom: 3rem;
+        }
+
+        .engine-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .engine-step {
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            padding: 2rem;
+            position: relative;
+        }
+
+        .step-num {
             font-family: var(--font-mono);
             color: var(--accent);
             font-size: 0.85rem;
-            text-transform: uppercase;
-            margin-bottom: 0.5rem;
+            margin-bottom: 1rem;
+            display: block;
+            letter-spacing: 0.1em;
         }
 
-        .grid-two {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 3rem;
-            margin-top: 2rem;
+        .step-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
         }
 
-        /* Flow Chart Стили */
-        .flow-container {
+        .step-desc {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .screen-protocol {
+            padding: 6rem 0;
+            min-height: 80vh;
             display: flex;
             flex-direction: column;
-            gap: 0.75rem;
-            max-width: 400px;
-            margin: 2rem 0;
-            font-family: var(--font-mono);
-            font-size: 0.9rem;
+            justify-content: center;
         }
 
-        .flow-node {
-            background-color: var(--bg-surface);
-            border: 1px solid var(--border-color);
-            padding: 0.75rem 1.5rem;
-            text-align: center;
-        }
-
-        .flow-arrow {
-            text-align: center;
-            color: var(--accent);
-        }
-
-        /* Терминал */
         .terminal-box {
             background-color: var(--bg-surface);
             border: 1px solid var(--border-color);
@@ -332,26 +324,6 @@
             pointer-events: none;
         }
 
-        ul {
-            list-style: none;
-            margin-top: 1rem;
-        }
-
-        ul li {
-            position: relative;
-            padding-left: 1.5rem;
-            margin-bottom: 0.75rem;
-            color: var(--text-muted);
-            line-height: 1.5;
-        }
-
-        ul li::before {
-            content: "—";
-            position: absolute;
-            left: 0;
-            color: var(--accent);
-        }
-
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -379,229 +351,127 @@
 
     <div class="matrix-grid"></div>
 
-    <div class="container">
-
-        <!-- SECTION 01: Hero -->
-        <section id="hero">
-            <div class="meta-header">Protocol: Anthroponomy // Ref: rivelazione.org // Status: Active</div>
-            <h1>Why is not all human potential realized?</h1>
+    <main class="container screen-manifesto">
+        <div class="meta-header">Protocol: Anthroponomy // Ref: rivelazione.org // Status: Active</div>
+        <section>
+            <h1>Почему реализуется не весь потенциал?</h1>
             <div class="lead-text">
-                <p>Most people do not doubt their potential. They doubt their ability to realize it.</p>
-                <p>Anthroponomy investigates the hidden constraints that separate possibility from reality.</p>
+                <p>Большинство людей приходят в контур Anthroponomy не потому, что у них отсутствует потенциал. Наоборот — они годами чувствуют разрыв между тем, что способны создать, и тем, что реально удаётся реализовать. Они видят масштаб, понимают направление, имеют опыт и знания — но постоянно сталкиваются с невидимым потолком.</p>
+                <p>Мы не начинаем с теории потенциала. Мы начинаем с <strong>наблюдения траекторий вашей реальной ежедневной реализации</strong>. Наша задача — не доказать наличие вашего масштаба, а исследовать один точный инженерный вопрос: где именно между возможностью и результатом система теряет мощность?</p>
             </div>
-            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                <a href="#protocol" class="btn">Enter Research Protocol →</a>
-                <a href="#core-problem" class="btn" style="color: var(--text-muted);">Explore Anthroponomy</a>
-            </div>
-        </section>
-
-        <!-- SECTION 02: The Core Problem -->
-        <section id="core-problem">
-            <h2>The Core Problem</h2>
-            <div class="lead-text">
-                <p>A person may see scale, have talent, possess knowledge, understand direction, remain highly motivated — and still fail to realize their full potential.</p>
-                <p>Anthroponomy treats this as an <strong>engineering question</strong>. Not a moral question.</p>
+            <div>
+                <a href="#protocol" class="btn">Войти в контур исследования →</a>
             </div>
         </section>
+    </main>
 
-        <!-- SECTION 03: Potential Horizon -->
-        <section id="potential-horizon">
-            <h2>Potential Horizon</h2>
-            <div class="definition-box">
-                <div class="definition-title">Definition</div>
-                <p><strong>Potential Horizon</strong> — The scale of possibility a person perceives throughout life.</p>
+    <section class="container screen-engine">
+        <h2>Как сырые наблюдения трансформируются в знания</h2>
+        <div class="engine-grid">
+            <div class="engine-step">
+                <span class="step-num">01 // DATA</span>
+                <div class="step-title">Зачем нужны данные?</div>
+                <div class="step-desc">Чтобы перевести субъективные жалобы на усталость или потерю фокуса в объективные метрики и зафиксировать точки сбоя.</div>
             </div>
-            <div class="lead-text">
-                <p>Many people carry a persistent awareness that they are capable of more. Anthroponomy treats this as an observable signal. Not an illusion. Not proof. A signal requiring investigation.</p>
+            <div class="engine-step">
+                <span class="step-num">02 // FEATURES</span>
+                <div class="step-title">Выявление признаков</div>
+                <div class="step-desc">Сбор поведенческих и аппаратных маркеров. Оцифровка длительности перегрузок и характера биомеханического шума.</div>
             </div>
-        </section>
+            <div class="engine-step">
+                <span class="step-num">03 // COORDINATES</span>
+                <div class="step-title">Расчет координат</div>
+                <div class="step-desc">Перевод признаков в математические веса на многомерной карте. Поиск точной локализации скрытого ограничения системы.</div>
+            </div>
+            <div class="engine-step">
+                <span class="step-num">04 // NAVIGATION</span>
+                <div class="step-title">Построение навигации</div>
+                <div class="step-desc">Формирование пошагового алгоритма по ликвидации внутреннего трения и де-оккупации когнитивного контура.</div>
+            </div>
+            <div class="engine-step">
+                <span class="step-num">05 // TRAJECTORY</span>
+                <div class="step-title">Выпрямление траектории</div>
+                <div class="step-desc">Развертывание подсказок во времени. Мониторинг изменений при переходе системы из точки потери в проектный оптимум.</div>
+            </div>
+            <div class="engine-step">
+                <span class="step-num">06 // KNOWLEDGE</span>
+                <div class="step-title">Формирование знаний</div>
+                <div class="step-desc">Анонимизированные траектории участников формируют глобальный массив стандартизированных наблюдений о потенциале человека.</div>
+            </div>
+        </div>
+    </section>
 
-        <!-- SECTION 04: Available Capacity -->
-        <section id="available-capacity">
-            <h2>Available Capacity</h2>
-            <div class="definition-box">
-                <div class="definition-title">Definition</div>
-                <p><strong>Available Capacity</strong> — The amount of usable system power currently available.</p>
-            </div>
-            <div class="lead-text">
-                <p>Potential may remain stable while available capacity decreases. This creates a widening realization gap.</p>
-            </div>
-        </section>
-
-        <!-- SECTION 05: Capacity Reallocation -->
-        <section id="capacity-reallocation">
-            <h2>Capacity Reallocation</h2>
-            <div class="lead-text">
-                <p>Many achievements are financed by hidden withdrawals from critical system layers:</p>
-                <ul>
-                    <li>Sleep & Bio-mechanical recovery</li>
-                    <li>Health integrity</li>
-                    <li>Sustained attention & focus</li>
-                    <li>Strategic relationships</li>
-                </ul>
-                <p>The platform investigates: What was sacrificed? What was preserved? At what cost was realization achieved?</p>
-            </div>
-        </section>
-
-        <!-- SECTION 06: Human Potential Twin -->
-        <section id="potential-twin">
-            <h2>Human Potential Twin</h2>
-            <div class="definition-box">
-                <div class="definition-title">Definition</div>
-                <p><strong>Human Potential Twin</strong> — A computational representation of a person’s realization trajectory.</p>
-            </div>
-            <div class="lead-text">
-                <p>The twin is generated from raw observations, Initial Signal Vectors (ISV), and trajectory analysis. It is not a prediction, nor a diagnosis — it is a structured research model.</p>
-            </div>
-        </section>
-
-        <!-- SECTION 07: Anthroponomy Research Flow -->
-        <section id="research-flow">
-            <h2>Anthroponomy Research Flow</h2>
-            <div class="flow-container">
-                <div class="flow-node">Human Observation</div>
-                <div class="flow-arrow">↓</div>
-                <div class="flow-node">RAW Observations</div>
-                <div class="flow-arrow">↓</div>
-                <div class="flow-node">Initial Signal Vector</div>
-                <div class="flow-arrow">↓</div>
-                <div class="flow-node">Signal Threshold Engine</div>
-                <div class="flow-arrow">↓</div>
-                <div class="flow-node">Capacity Reallocation Profile</div>
-                <div class="flow-arrow">↓</div>
-                <div class="flow-node">Human Potential Twin</div>
-                <div class="flow-arrow">↓</div>
-                <div class="flow-node">Trajectory Analysis</div>
-                <div class="flow-arrow">↓</div>
-                <div class="flow-node">Research Dataset</div>
-            </div>
-        </section>
-
-        <!-- SECTION 08: Research Participation -->
-        <section id="participation">
-            <h2>Research Participation</h2>
-            <div class="grid-two">
-                <div>
-                    <h3>Step 1 // Calibration</h3>
-                    <p style="color: var(--text-muted);">Establishing base values of perceived horizon limits.</p>
-                </div>
-                <div>
-                    <h3>Step 2 // Observation</h3>
-                    <p style="color: var(--text-muted);">Collecting high-fidelity linguistic and telemetry markers.</p>
-                </div>
-                <div>
-                    <h3>Step 3 // Signal Analysis</h3>
-                    <p style="color: var(--text-muted);">Processing system parameters through computational engines.</p>
-                </div>
-                <div>
-                    <h3>Step 4 // Research Routing</h3>
-                    <p style="color: var(--text-muted);">Allocating response metrics to multi-dimensional maps.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- SECTION 09: Research Ethics -->
-        <section id="ethics">
-            <h2>Research Ethics</h2>
-            <div class="lead-text" style="font-size: 1.1rem;">
-                <p>The platform does not diagnose. The platform does not provide medical advice. The platform does not replace professional care. The platform does not guarantee outcomes.</p>
-                <p>The platform exists solely to advance research into human potential realization.</p>
-            </div>
-        </section>
-
-        <!-- SECTION 10: Research Manifesto -->
-        <section id="manifesto">
-            <h2>Research Manifesto</h2>
-            <div class="lead-text" style="border-left: 2px solid var(--border-color); padding-left: 2rem; font-style: italic;">
-                <p>"Your potential is not on trial. We begin from the assumption that you already feel its existence. The question is different: Why is only part of that potential becoming reality? To answer that question, we must make invisible constraints visible."</p>
-            </div>
-        </section>
-
-        <!-- SECTION 11 & INTAKE PROTOCOL TERMINAL -->
-        <section id="protocol">
-            <h2>Research Protocol Entry</h2>
-            <div class="flow-container" style="max-width: 100%; margin-bottom: 3rem; font-size: 0.8rem;">
-                <div class="flow-node" style="padding: 0.5rem;">Potential Horizon Origin → Potential Realization Gap → Available Capacity → Structural Constraint Signal</div>
+    <section id="protocol" class="container screen-protocol">
+        <div class="terminal-box">
+            <div class="terminal-header">
+                <span id="terminal-step-id">SYS_MAPPING // STEP 1 OF 5</span>
+                <span id="terminal-progress">PROGRESS: 20%</span>
             </div>
 
-            <div class="terminal-box">
-                <div class="terminal-header">
-                    <span id="terminal-step-id">SYS_MAPPING // STEP 1 OF 5</span>
-                    <span id="terminal-progress">PROGRESS: 20%</span>
-                </div>
-
-                <form id="research-form" onsubmit="event.preventDefault();">
-                    <!-- Q1 -->
-                    <div class="question-wrapper active" data-step="1">
-                        <div class="question-context">System Calibration // Potential Horizon [t_0]</div>
-                        <div class="question-text">Каким вы представляли своё будущее в начале пути? Какой масштаб жизни, векторов влияния и созидания казался вам естественным и правильным?</div>
-                        <div class="input-container">
-                            <textarea rows="3" placeholder="Опишите внутренний горизонт возможностей (доступен голосовой ввод)..." required></textarea>
-                            <button type="button" class="mic-btn" title="Включить транскрибацию голоса">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
-                            </button>
-                        </div>
+            <form id="research-form" onsubmit="event.preventDefault();">
+                <div class="question-wrapper active" data-step="1">
+                    <div class="question-context">System Calibration // Potential Horizon [t_0]</div>
+                    <div class="question-text">Каким вы представляли своё будущее в начале пути? Какой масштаб жизни, векторов влияния и созидания казался вам естественным и правильным?</div>
+                    <div class="input-container">
+                        <textarea rows="3" placeholder="Опишите внутренний горизонт возможностей и ранние представления (доступен голосовой ввод)..." required></textarea>
+                        <button type="button" class="mic-btn" title="Включить транскрибацию голоса">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
+                        </button>
                     </div>
-
-                    <!-- Q2 -->
-                    <div class="question-wrapper" data-step="2">
-                        <div class="question-context">Target Matrix // Potential Realization</div>
-                        <div class="question-text">Что вы планировали и были внутренне готовы реализовать за последние годы, но проект остался нереализованным?</div>
-                        <div class="input-container">
-                            <textarea rows="3" placeholder="Опишите масштаб задач, столкнувшихся с барьером..." required></textarea>
-                            <button type="button" class="mic-btn" title="Включить транскрибацию голоса">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Q3 -->
-                    <div class="question-wrapper" data-step="3">
-                        <div class="question-context">Efficiency Analysis // Effective Capacity</div>
-                        <div class="question-text">В какой момент стандартного дня вы чувствуете, что фокус падает и система переходит в режим принудительного выживания?</div>
-                        <div class="input-container">
-                            <textarea rows="3" placeholder="Зафиксируйте время угасания фокуса..." required></textarea>
-                            <button type="button" class="mic-btn" title="Включить транскрибацию голоса">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Q4 -->
-                    <div class="question-wrapper" data-step="4">
-                        <div class="question-context">Hardware Configuration // Features</div>
-                        <div class="question-text">Какие маркеры вы фиксируете на уровне физического каркаса (зажимы в шее, мигрени, асимметрия, фоновая вялость)?</div>
-                        <div class="input-container">
-                            <textarea rows="3" placeholder="Перечислите физические проявления накопленного шума..." required></textarea>
-                            <button type="button" class="mic-btn" title="Включить транскрибацию голоса">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Q5 -->
-                    <div class="question-wrapper" data-step="5">
-                        <div class="question-context">Energy Balance // Available Capacity</div>
-                        <div class="question-text">Какую долю энергии, по вашей внутренней оценке, система тратит впустую на удержание баланса и борьбу со скрытым трением?</div>
-                        <div class="input-container">
-                            <textarea rows="3" placeholder="Оцените объем теряемой мощности ресурса..." required></textarea>
-                            <button type="button" class="mic-btn" title="Включить транскрибацию голоса">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
-                            </button>
-                        </div>
-                    </div>
-                </form>
-
-                <div class="terminal-footer">
-                    <button type="button" id="btn-prev" class="btn btn-disabled">← Назад</button>
-                    <button type="button" id="btn-next" class="btn">Далее →</button>
                 </div>
+
+                <div class="question-wrapper" data-step="2">
+                    <div class="question-context">Target Matrix // Potential Realization</div>
+                    <div class="question-text">Что вы планировали и были внутренне готовы реализовать за последние годы, но проект остался нереализованным?</div>
+                    <div class="input-container">
+                        <textarea rows="3" placeholder="Опишите масштаб задач или идей, которые столкнулись с невидимым барьером..." required></textarea>
+                        <button type="button" class="mic-btn" title="Включить транскрибацию голоса">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="question-wrapper" data-step="3">
+                    <div class="question-context">Efficiency Analysis // Effective Capacity</div>
+                    <div class="question-text">В какой момент стандартного дня вы чувствуете, что фокус падает и система переходит в режим принудительного выживания?</div>
+                    <div class="input-container">
+                        <textarea rows="3" placeholder="Зафиксируйте время угасания и характер изменения вашего состояния..." required></textarea>
+                        <button type="button" class="mic-btn" title="Включить транскрибацию голоса">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="question-wrapper" data-step="4">
+                    <div class="question-context">Hardware Configuration // Features</div>
+                    <div class="question-text">Какие маркеры вы фиксируете на уровне физического каркаса (зажимы в шее, мигрени, асимметрия, фоновая вялость)?</div>
+                    <div class="input-container">
+                        <textarea rows="3" placeholder="Перечислите физические проявления накопленного биомеханического шума..." required></textarea>
+                        <button type="button" class="mic-btn" title="Включить транскрибацию голоса">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="question-wrapper" data-step="5">
+                    <div class="question-context">Energy Balance // Available Capacity</div>
+                    <div class="question-text">Какую долю энергии, по вашей внутренней оценке, система тратит впустую на удержание баланса и борьбу со скрытым трением?</div>
+                    <div class="input-container">
+                        <textarea rows="3" placeholder="Оцените объем теряемой мощности (например: более половины, треть ресурса)..." required></textarea>
+                        <button type="button" class="mic-btn" title="Включить транскрибацию голоса">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+            <div class="terminal-footer">
+                <button type="button" id="btn-prev" class="btn btn-disabled">← Назад</button>
+                <button type="button" id="btn-next" class="btn">Далее →</button>
             </div>
-        </section>
+        </div>
+    </section>
 
-    </div>
-
-    <!-- ИНТЕГРАЦИЯ С RUNTIME ENGINE -->
     <script src="./js/20_frontend.js"></script>
 
     <script>
@@ -709,7 +579,7 @@
 
         function updateTerminal() {
             if (runtimeSession && runtimeSession.voiceEngine.isStarted) {
-                runtimeSession.voiceSession.stop();
+                runtimeSession.voiceEngine.stop();
             }
 
             steps.forEach(step => {
