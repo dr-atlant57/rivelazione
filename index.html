@@ -1,0 +1,278 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Пансионат Три Короны (Copy)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600&family=Playfair+Display:wght@500;700&display=swap">
+<style>
+/* Layout: sticky price bar, full-bleed lake photo hero, facts strip, story + features, photo mosaic with viewer, nature strip, location, contact */
+:root{
+  --bg:#f2f6f7; --surface:#ffffff; --fg:#10242c; --muted:#53666d; --line:#d3dee1;
+  --lake:#0d3a4b; --lake-fg:#eaf4f6; --sand:#b9822c; --sand-fg:#1a1204;
+  --f-display:'Playfair Display',Georgia,serif; --f-body:'Golos Text',system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0b1519; --surface:#13222a; --fg:#e7f0f2; --muted:#9bb2b9; --line:#25383f;
+  --lake:#08222c; --lake-fg:#eaf4f6; --sand:#d8a24a; --sand-fg:#1a1204; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0b1519; --surface:#13222a; --fg:#e7f0f2; --muted:#9bb2b9; --line:#25383f;
+  --lake:#08222c; --lake-fg:#eaf4f6; --sand:#d8a24a; --sand-fg:#1a1204; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:16px;line-height:1.6}
+h1,h2,h3{font-family:var(--f-display);font-weight:700;line-height:1.15;text-wrap:balance;margin:0}
+p{margin:0}
+a{color:inherit}
+img{display:block}
+.wrap{max-width:1120px;margin-inline:auto;padding-inline:16px}
+section{padding-block:56px}
+.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--sand);font-weight:600}
+h2{font-size:clamp(26px,4vw,38px);margin-top:8px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 22px;border-radius:6px;font:600 15px var(--f-body);text-decoration:none;border:0;cursor:pointer;background:var(--sand);color:var(--sand-fg)}
+.btn.ghost{background:transparent;color:inherit;border:1px solid currentColor}
+.btn:focus-visible,a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--sand);outline-offset:2px}
+
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--lake);color:var(--lake-fg)}
+.bar .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:56px;flex-wrap:wrap;padding-block:6px}
+.bar b{font-family:var(--f-display);font-size:18px}
+.bar .price{font-variant-numeric:tabular-nums;font-weight:600}
+.bar .btn{min-height:40px;padding:0 16px}
+
+.hero{position:relative;color:#fff;background:var(--lake);overflow:hidden}
+.hero img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(5,20,27,.88),rgba(5,20,27,.25) 60%,rgba(5,20,27,.1))}
+.hero .wrap{position:relative;z-index:1;padding-block:200px 40px;display:grid;gap:18px}
+.hero h1{font-size:clamp(36px,7vw,68px)}
+.hero p.lead{max-width:58ch;font-size:18px;opacity:.95}
+.hero .cta{display:flex;gap:12px;flex-wrap:wrap}
+
+.facts{background:var(--surface);border-bottom:1px solid var(--line)}
+.facts dl{margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.facts div{padding:22px 16px;border-inline-start:1px solid var(--line)}
+.facts div:first-child{border-inline-start:0}
+.facts dt{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.facts dd{margin:4px 0 0;font-family:var(--f-display);font-size:26px;font-weight:700;font-variant-numeric:tabular-nums}
+.facts dd small{font-family:var(--f-body);font-size:14px;font-weight:400;color:var(--muted)}
+
+.story{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+.story .col{min-width:0}
+.story p{max-width:62ch}
+.story p+p{margin-top:14px}
+.feat{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.feat li{padding:14px 16px;background:var(--surface);border:1px solid var(--line);border-radius:6px;display:flex;justify-content:space-between;gap:12px}
+.feat li span:last-child{color:var(--muted);text-align:right}
+
+.mosaic{display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:170px;gap:10px;margin-top:24px}
+.shot{position:relative;border:0;padding:0;border-radius:6px;overflow:hidden;cursor:zoom-in;background:var(--line);min-width:0}
+.shot img{width:100%;height:100%;object-fit:cover}
+.shot span{position:absolute;left:0;right:0;bottom:0;padding:22px 12px 10px;text-align:left;color:#fff;font:600 13px var(--f-body);background:linear-gradient(to top,rgba(0,0,0,.6),transparent)}
+.s1{grid-column:span 4;grid-row:span 2}
+.s2,.s3,.s4,.s5,.s6,.s7,.s8,.s9{grid-column:span 2}
+.s7{grid-column:span 3}.s8{grid-column:span 3}
+
+.video{position:relative;display:grid;place-items:center;margin-top:24px;aspect-ratio:16/9;border-radius:8px;overflow:hidden;background:var(--lake);color:#fff;text-decoration:none}
+.video img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.video::after{content:"";position:absolute;inset:0;background:rgba(5,20,27,.45)}
+.video .play{position:relative;z-index:1;width:84px;height:84px;border-radius:50%;background:var(--sand);display:grid;place-items:center}
+.video .play::after{content:"";border-inline-start:24px solid var(--sand-fg);border-block:15px solid transparent;margin-inline-start:7px}
+.video .vlabel{position:absolute;z-index:1;left:0;right:0;bottom:16px;text-align:center;font-weight:600}
+.strip{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:24px}
+.strip img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:6px;cursor:zoom-in}
+
+.place{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+.place ul{list-style:none;margin:20px 0 0;padding:0}
+.place li{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.place li b{font-variant-numeric:tabular-nums;text-align:right}
+.place .col{min-width:0}
+.place .pic{border-radius:8px;overflow:hidden;position:relative}
+.place .pic img{width:100%;aspect-ratio:4/3;object-fit:cover}
+.place .row{margin-top:14px}
+
+.contact{background:var(--lake);color:var(--lake-fg)}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+.contact .col{min-width:0}
+.who{margin-top:14px;font-size:18px}
+.phone{font-family:var(--f-display);font-size:clamp(26px,5vw,40px);margin-top:4px;font-variant-numeric:tabular-nums;user-select:all}
+.contact .sub{color:color-mix(in srgb,var(--lake-fg) 80%,transparent);margin-top:10px;max-width:46ch}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+form{display:grid;gap:12px}
+label{font-size:13px;display:grid;gap:6px}
+input{font:inherit;padding:12px;border-radius:6px;border:1px solid var(--line);background:var(--surface);color:var(--fg);min-height:48px;width:100%}
+#msg{min-height:24px;font-size:14px}
+footer{padding-block:24px;font-size:13px;color:var(--muted)}
+
+.lb{position:fixed;inset:0;z-index:20;background:rgba(3,10,13,.94);display:grid;grid-template-rows:1fr auto;padding:16px;padding-top:calc(16px + env(safe-area-inset-top,0px));padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}
+.lb img{max-width:100%;max-height:100%;margin:auto;object-fit:contain;min-height:0}
+.lb .ctl{display:flex;justify-content:space-between;gap:10px;padding-top:12px}
+.lb button{min-height:44px;min-width:44px;padding:0 16px;border-radius:6px;border:1px solid #ffffff66;background:transparent;color:#fff;font:600 15px var(--f-body);cursor:pointer}
+
+@media (max-width:760px){
+  section{padding-block:40px}
+  .hero .wrap{padding-block:130px 28px}
+  .story,.place,.contact-grid{grid-template-columns:1fr;gap:28px}
+  .mosaic{grid-template-columns:repeat(2,1fr);grid-auto-rows:130px}
+  .s1{grid-column:span 2;grid-row:span 2}
+  .s2,.s3,.s4,.s5,.s6,.s7,.s8,.s9{grid-column:span 1}
+  .strip{grid-template-columns:1fr}
+  .facts div{border-inline-start:0;border-top:1px solid var(--line)}
+}
+@media (prefers-reduced-motion:no-preference){.btn{transition:transform .15s}.btn:hover{transform:translateY(-1px)}}
+</style>
+
+<div class="bar"><div class="wrap">
+  <b>Пансионат «Три Короны»</b>
+  <span class="price">1 500 000 $</span>
+  <a class="btn" href="#kontakty">Записаться на показ</a>
+</div></div>
+
+<header class="hero">
+  <img class="bg" src="img/p01.jpg" alt="Пансионат «Три Короны» на берегу Иссык-Куля, вид с высоты на пирс и сад" width="1600" height="1063">
+  <div class="wrap">
+    <span class="eyebrow" style="color:#f1c987">Чолпон-Ата, Иссык-Куль</span>
+    <h1>Пансионат у самой воды, с садом и термальными бассейнами</h1>
+    <p class="lead">Готовый бизнес на первой линии Иссык-Куля. Корпуса с балконами, ухоженная территория, пирс и бассейны с видом на снежные хребты.</p>
+    <div class="cta">
+      <a class="btn" href="#kontakty">Записаться на показ</a>
+      <a class="btn ghost" href="#foto">Смотреть фото</a>
+    </div>
+  </div>
+</header>
+
+<div class="facts"><div class="wrap">
+  <dl>
+    <div><dt>Цена</dt><dd>1 500 000 <small>$</small></dd></div>
+    <div><dt>Корпуса</dt><dd>3 <small>этажа</small></dd></div>
+    <div><dt>Озеро</dt><dd>Иссык-Куль</dd></div>
+    <div><dt>Город</dt><dd>Чолпон-Ата</dd></div>
+    <div><dt>Тип</dt><dd>Пансионат</dd></div>
+  </dl>
+</div></div>
+
+<section><div class="wrap story">
+  <div class="col">
+    <span class="eyebrow">О пансионате</span>
+    <h2>Отдых, который гости запоминают и возвращаются</h2>
+    <p style="margin-top:18px">«Три Короны» стоит на северном берегу Иссык-Куля, там, где летом самый тёплый и сухой климат. С территории открывается вид на озеро и снежные хребты Тескей Ала-Тоо на другом берегу.</p>
+    <p>Трёхэтажные корпуса с балконами и террасами окружены садом: розы, цветники, ивы, дорожки из плитки и беседки. От корпусов к воде ведёт аллея, на берегу есть пирс.</p>
+    <p>На территории работают бассейны с подогретой водой и зоны отдыха с шезлонгами. Это живой бизнес, который можно принять и сразу вести дальше.</p>
+  </div>
+  <div class="col">
+    <ul class="feat">
+      <li><span>Расположение</span><span>Первая линия, Чолпон-Ата</span></li>
+      <li><span>Корпуса</span><span>3 этажа, балконы с видом</span></li>
+      <li><span>Территория</span><span>Сад, беседки, детская зона</span></li>
+      <li><span>Вода</span><span>Пирс и пляж у озера</span></li>
+      <li><span>Бассейны</span><span>Термальные, с зоной отдыха</span></li>
+      <li><span>Парковка</span><span>Просторная площадка у корпусов</span></li>
+    </ul>
+  </div>
+</div></section>
+
+<section id="foto" style="background:var(--surface);border-block:1px solid var(--line)"><div class="wrap">
+  <span class="eyebrow">Фотографии</span>
+  <h2>Посмотрите всё своими глазами</h2>
+  <div class="mosaic" id="mosaic">
+    <button class="shot s1" type="button" data-src="img/p10.jpg"><img src="img/p10.jpg" alt="Главный корпус и лестница среди роз" loading="lazy"><span>Главный корпус и аллея</span></button>
+    <button class="shot s2" type="button" data-src="img/p07.jpg"><img src="img/p07.jpg" alt="Бассейны с шезлонгами на берегу" loading="lazy"><span>Бассейны у озера</span></button>
+    <button class="shot s3" type="button" data-src="img/p12.jpg"><img src="img/p12.jpg" alt="Корпуса с балконами и цветники" loading="lazy"><span>Корпуса и цветники</span></button>
+    <button class="shot s4" type="button" data-src="img/p13.jpg"><img src="img/p13.jpg" alt="Трёхэтажный корпус среди зелени" loading="lazy"><span>Корпус в саду</span></button>
+    <button class="shot s5" type="button" data-src="img/p14.jpg"><img src="img/p14.jpg" alt="Фасад с вывеской Hotel и тремя коронами" loading="lazy"><span>Фасад с вывеской</span></button>
+    <button class="shot s6" type="button" data-src="img/p06.jpg"><img src="img/p06.jpg" alt="Круглый бассейн с тёплой водой" loading="lazy"><span>Тёплый бассейн</span></button>
+    <button class="shot s7" type="button" data-src="img/p11.jpg"><img src="img/p11.jpg" alt="Вид сверху на пирс, сад и озеро" loading="lazy"><span>Пирс и сад сверху</span></button>
+    <button class="shot s8" type="button" data-src="img/p08.jpg"><img src="img/p08.jpg" alt="Каменные термальные купели" loading="lazy"><span>Каменные купели</span></button>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <span class="eyebrow">Видео</span>
+  <h2>Пройдитесь по территории</h2>
+  <a class="video" href="https://youtu.be/B7dQ6_oWpOc" target="_blank" rel="noopener" aria-label="Смотреть видео о пансионате на YouTube">
+    <img src="img/p11.jpg" alt="" loading="lazy">
+    <span class="play" aria-hidden="true"></span>
+    <span class="vlabel">Смотреть видео на YouTube</span>
+  </a>
+</div></section>
+
+<section style="background:var(--surface);border-block:1px solid var(--line)"><div class="wrap">
+  <span class="eyebrow">Иссык-Куль рядом</span>
+  <h2>Горы, озеро и четыре сезона</h2>
+  <div class="strip">
+    <img src="img/p02.jpg" alt="Цветущий абрикос на берегу и снежные горы за озером" loading="lazy">
+    <img src="img/p03.jpg" alt="Поле маков и снежные вершины" loading="lazy">
+    <img src="img/p05.jpg" alt="Осенний берег озера и золотые тополя" loading="lazy">
+  </div>
+  <p class="note" style="margin-top:14px;color:var(--muted);max-width:62ch">Весной цветут абрикосы, летом работает пляж, осенью тополя желтеют вдоль воды. Для гостей здесь найдётся занятие в любой сезон.</p>
+</div></section>
+
+<section><div class="wrap place">
+  <div class="col">
+    <span class="eyebrow">Расположение</span>
+    <h2>Чолпон-Ата, северный берег Иссык-Куля</h2>
+    <ul>
+      <li><span>Озеро</span><b>Территория выходит к воде</b></li>
+      <li><span>Курортный центр Чолпон-Аты</span><b>Рядом</b></li>
+      <li><span>Аэропорт Тамчы</span><b>Около 25 км</b></li>
+      <li><span>Бишкек</span><b>Около 250 км</b></li>
+    </ul>
+    <div class="row"><a class="btn ghost" href="https://share.google/OxZrK7laZuf3dKpyy" style="color:var(--fg)">Открыть на карте</a></div>
+  </div>
+  <div class="col pic"><img src="img/p09.jpg" alt="Корпус пансионата с вывеской Hotel" loading="lazy"></div>
+</div></section>
+
+<section class="contact" id="kontakty"><div class="wrap contact-grid">
+  <div class="col">
+    <span class="eyebrow">Контакты</span>
+    <h2>Договоримся о показе</h2>
+    <p class="who">Жашыл</p>
+    <p class="phone" id="phone">+996 709 098 765</p>
+    <p class="sub">Звоните или пишите в WhatsApp. Покажем территорию, корпуса и документы в удобное для вас время.</p>
+    <div class="row">
+      <a class="btn" href="https://wa.me/996709098765">WhatsApp</a>
+      <a class="btn ghost" href="tel:+996709098765">Позвонить</a>
+      <button class="btn ghost" id="copy" type="button">Скопировать номер</button>
+    </div>
+  </div>
+  <div class="col">
+    <form id="lead">
+      <label for="name">Ваше имя<input id="name" autocomplete="name" placeholder="Например, Азамат"></label>
+      <label for="tel">Телефон<input id="tel" type="tel" autocomplete="tel" placeholder="+996"></label>
+      <label for="when">Когда удобно посмотреть<input id="when" placeholder="Например, в субботу после обеда"></label>
+      <button class="btn" type="submit">Хочу посмотреть пансионат</button>
+      <p id="msg" role="status"></p>
+    </form>
+  </div>
+</div></section>
+
+<footer><div class="wrap">Пансионат «Три Короны», Чолпон-Ата. Цена: 1 500 000 $. Контакт: Жашыл, +996 709 098 765.</div></footer>
+
+<div class="lb" id="lb" hidden>
+  <img id="lbimg" alt="">
+  <div class="ctl"><button type="button" id="prev">‹ Назад</button><button type="button" id="close">Закрыть</button><button type="button" id="next">Вперёд ›</button></div>
+</div>
+
+<script>
+(function(){
+  var shots=[].slice.call(document.querySelectorAll('.shot,.strip img'));
+  var srcs=shots.map(function(e){return e.getAttribute('data-src')||e.getAttribute('src')});
+  var lb=document.getElementById('lb'), im=document.getElementById('lbimg'), cur=0;
+  function show(i){cur=(i+srcs.length)%srcs.length;im.src=srcs[cur];im.alt=''}
+  shots.forEach(function(e,i){e.addEventListener('click',function(){show(i);lb.hidden=false;document.getElementById('close').focus()})});
+  document.getElementById('close').onclick=function(){lb.hidden=true};
+  document.getElementById('prev').onclick=function(){show(cur-1)};
+  document.getElementById('next').onclick=function(){show(cur+1)};
+  document.addEventListener('keydown',function(e){
+    if(lb.hidden)return;
+    if(e.key==='Escape')lb.hidden=true;
+    if(e.key==='ArrowLeft')show(cur-1);
+    if(e.key==='ArrowRight')show(cur+1);
+  });
+  document.getElementById('lead').addEventListener('submit',function(e){
+    e.preventDefault();
+    document.getElementById('msg').textContent='Заявка на этой странице пока никуда не отправляется. Позвоните или напишите в WhatsApp, чтобы договориться о показе.';
+  });
+  document.getElementById('copy').addEventListener('click',function(){
+    var t=document.getElementById('phone').textContent,b=this;
+    function sel(){var r=document.createRange();r.selectNodeContents(document.getElementById('phone'));var s=getSelection();s.removeAllRanges();s.addRange(r)}
+    try{navigator.clipboard.writeText(t).then(function(){b.textContent='Скопировано';setTimeout(function(){b.textContent='Скопировать номер'},1800)},sel)}catch(x){sel()}
+  });
+})();
+</script>
+
+</body></html>
