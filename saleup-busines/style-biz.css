@@ -1,0 +1,44 @@
+/* Деловой стиль для страницы коммерции */
+@font-face{font-family:PF;src:url(pf600.woff2) format("woff2");font-weight:600;font-display:swap;unicode-range:U+0400-04FF}
+@font-face{font-family:PF;src:url(pf600l.woff2) format("woff2");font-weight:600;font-display:swap;unicode-range:U+0000-00FF,U+2013,U+2014,U+2248,U+00B2}
+@font-face{font-family:MR;src:url(mr500.woff2) format("woff2");font-weight:500;font-display:swap;unicode-range:U+0400-04FF}
+@font-face{font-family:MR;src:url(mr500l.woff2) format("woff2");font-weight:500;font-display:swap;unicode-range:U+0000-00FF,U+2013,U+2014,U+2248}
+@font-face{font-family:MR;src:url(mr700.woff2) format("woff2");font-weight:700 800;font-display:swap;unicode-range:U+0400-04FF}
+@font-face{font-family:MR;src:url(mr700l.woff2) format("woff2");font-weight:700 800;font-display:swap;unicode-range:U+0000-00FF,U+2013,U+2014,U+2248}
+
+body.biz{--y:#D2B176;--r:#D2B176;--bg:#0D141B;--card:#141E28;--line:#243241;--txt:#EEF0F2;--sub:#B9C2CB;--wa:#1E9E58;
+  font-family:MR,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background:radial-gradient(1200px 600px at 80% -10%,#1A2838 0%,transparent 60%),var(--bg)}
+.biz .H,.biz .inv b,.biz .pack .pr{font-variant-numeric:lining-nums}
+.biz .H{font-family:PF,Georgia,"Times New Roman",serif;font-weight:600;text-transform:none;letter-spacing:0;line-height:1.1}
+.biz .hero h1{font-size:clamp(40px,11vw,66px)}
+.biz h2{font-size:clamp(30px,8vw,44px)}
+.biz .plate{background:transparent;color:var(--y);border:1px solid rgba(210,177,118,.55);font-family:MR,sans-serif;font-weight:700;font-size:13px;letter-spacing:.16em;padding:7px 14px;border-radius:999px}
+.biz .kick{font-family:MR,sans-serif;font-weight:700;font-size:13px;letter-spacing:.18em;color:var(--y)}
+.biz .logo b{font-family:MR,sans-serif;font-weight:800;font-size:17px;letter-spacing:.06em}
+.biz .logo i{background:linear-gradient(135deg,#E6CC96,#A9844A);font-family:MR,sans-serif;font-weight:800;font-size:15px}
+.biz .proof{background:rgba(210,177,118,.06);border-color:rgba(210,177,118,.3)}
+.biz .btn{font-family:MR,sans-serif;font-weight:800;text-transform:none;letter-spacing:.01em;font-size:18px;border-radius:12px}
+.biz .btn.ghost{font-size:16px}
+.biz .ck{background:transparent;border:1.5px solid var(--y)}
+.biz .ck svg path{stroke:var(--y)}
+.biz .kit em{background:transparent;border:1px solid rgba(210,177,118,.5);color:var(--y);font-family:PF,serif;font-weight:600}
+.biz .kit div,.biz .pack,.biz .case,.biz .type{border-radius:14px}
+.biz .steps li:before{background:transparent;border:1.5px solid var(--y);color:var(--y);font-family:PF,serif;font-weight:600}
+.biz .pack h3{font-size:26px}
+.biz .pack .pr{font-family:PF,serif;font-weight:600;font-size:24px}
+.biz .pack li:before{background:var(--y);width:6px;height:6px;top:14px}
+.biz .pack.top{border:1.5px solid var(--y)}
+.biz .pack.top:before{background:var(--y);font-family:MR,sans-serif}
+.biz .type b{font-family:PF,serif;font-weight:600;text-transform:none;font-size:22px}
+.biz summary:after{color:var(--y)}
+.biz .final{background:linear-gradient(160deg,#18222D,#111922)}
+.biz .phone{box-shadow:0 30px 60px rgba(0,0,0,.5),0 0 0 6px rgba(210,177,118,.08)}
+/* инвест-блок */
+.inv{margin-top:18px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:6px 18px 18px}
+.inv .row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}
+.inv .row span{color:var(--sub);font-size:15px}
+.inv .row b{font-family:PF,Georgia,serif;font-weight:600;font-size:22px;white-space:nowrap}
+.inv .big{margin-top:16px;text-align:center;padding:18px 10px;border:1px solid rgba(210,177,118,.45);border-radius:12px;background:rgba(210,177,118,.06)}
+.inv .big span{display:block;font-weight:700;font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--sub)}
+.inv .big b{display:block;font-family:PF,Georgia,serif;font-weight:600;font-size:46px;color:var(--y);line-height:1.15;margin-top:4px}
+.inv .big i{display:block;font-style:normal;color:var(--sub);font-size:15px;margin-top:2px}
